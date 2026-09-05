@@ -4,6 +4,7 @@ import SiteNav from "@/components/cinematic/SiteNav";
 import Cursor from "@/components/cinematic/Cursor";
 import SmoothScroll from "@/components/cinematic/SmoothScroll";
 import AmbientSound from "@/components/cinematic/AmbientSound";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Aura Sanctuary — Khu nghỉ dưỡng biển siêu sang",
@@ -74,6 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteNav />
         <main className="flex-1">{children}</main>
         <Footer />
+        <Toaster position="bottom-center" toastOptions={{ style: { background: "#161616", color: "#f7f5f0", border: "1px solid rgba(197,168,128,.4)" } }} />
       </body>
     </html>
   );

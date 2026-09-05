@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, type CSSProperties } from "react";
+import dynamic from "next/dynamic";
 import { Reveal, useSectionProgress } from "@/components/cinematic/Reveal";
 import { SceneHead } from "@/components/cinematic/Editorial";
 import Preloader from "@/components/cinematic/Preloader";
@@ -12,6 +13,13 @@ import Discover from "@/components/cinematic/Discover";
 import Experiences from "@/components/cinematic/Experiences";
 import { Dining, Wellness, SunsetMoment } from "@/components/cinematic/DiningWellness";
 import BookingFloat from "@/components/cinematic/BookingFloat";
+
+const ResortMapView = dynamic(() => import("@/components/cinematic/ResortMapView"), {
+  ssr: false,
+  loading: () => <div className="h-80 w-full animate-pulse bg-[#e8e2d5] lg:h-96" />,
+});
+
+const SeaOfLight = dynamic(() => import("@/components/cinematic/SeaOfLight"), { ssr: false });
 
 const HERO_IMG =
   "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2200&q=75";
@@ -234,11 +242,22 @@ function Gallery() {
   );
 }
 
-/** Liên hệ concierge — form gạch chân tối giản, nối /api/tickets thật. */
+/** Liên hệ concierge — bản đồ thật + form gạch chân tối giản, nối /api/tickets. */
 function Contact() {
   return (
     <section id="contact" className="bg-[#f7f5f0] px-5 py-32 lg:py-40">
-      <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-14 lg:grid-cols-2">
+      <div className="mx-auto max-w-[1200px]">
+        <Reveal>
+          <div className="overflow-hidden" data-cursor="Bản đồ">
+            <ResortMapView />
+          </div>
+          <p className="mt-3 flex justify-between font-mono text-[11px] uppercase tracking-[0.24em] text-black/45">
+            <span>Aura Sanctuary Bay — Bãi Khem</span>
+            <span>10.0245°N, 104.0322°E</span>
+          </p>
+        </Reveal>
+      </div>
+      <div className="mx-auto mt-16 grid max-w-[1200px] grid-cols-1 gap-14 lg:grid-cols-2">
         <div>
           <SceneHead
             no="09"
@@ -291,7 +310,9 @@ export default function Home() {
       <Gallery />
       <EscapeBuilder />
       <BookingFloat />
-      <section className="bg-[#101010] px-6 pb-28 pt-4 text-center text-[#f7f5f0] lg:pb-40">
+      <section className="relative overflow-hidden bg-[#101010] px-6 pb-28 pt-4 text-center text-[#f7f5f0] lg:pb-40">
+        <SeaOfLight />
+        <div className="relative">
         <Reveal>
           <p className="label-uppercase text-[11px] tracking-[0.34em] text-[#c5a880]">Begin</p>
           <h2 className="font-display display-xl mx-auto mt-6 max-w-6xl">
@@ -303,6 +324,7 @@ export default function Home() {
             Đặt kỳ nghỉ
           </a>
         </Reveal>
+        </div>
       </section>
       <Contact />
       {/* Sticky booking CTA — mobile */}

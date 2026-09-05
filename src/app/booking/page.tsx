@@ -1,6 +1,8 @@
 "use client";
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { toast } from "sonner";
+import { QRCodeSVG } from "qrcode.react";
 import { VILLAS, SERVICES, vnd } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
@@ -42,7 +44,9 @@ function BookingInner() {
       if (!r.ok) throw new Error(j.error ?? "Lỗi tìm phòng");
       setItems(j.items);
       if (j.items.length && !selected) setSelected(j.items[0].slug);
-    } catch (e) { setError((e as Error).message); }
+      const n = j.items.filter((x: Item) => x.available).length;
+      toast.success(`Tìm thấy ${n} loại biệt thự còn phòng`);
+    } catch (e) { const m = (e as Error).message; setError(m); toast.error(m); }
     finally { setLoading(false); }
   }
 
@@ -59,7 +63,8 @@ function BookingInner() {
       const j = await r.json();
       if (!r.ok) throw new Error(j.error ?? "Đặt phòng thất bại");
       setResult(j);
-    } catch (e) { setError((e as Error).message); }
+      toast.success(`Đã giữ chỗ ${j.code} — còn 15 phút thanh toán`);
+    } catch (e) { const m = (e as Error).message; setError(m); toast.error(m); }
   }
 
   const chosen = items.find((i) => i.slug === selected) ?? VILLAS.map((v) => ({ slug: v.slug, name: v.name, pricePerNight: v.price, total: 0, nights: 0, availableUnits: 0, available: true } as Item)).find((i) => i.slug === selected);
@@ -130,6 +135,13 @@ function BookingInner() {
           <p className="mt-4 text-center font-mono text-sm tracking-[0.2em] text-white/70">
             Mã giữ chỗ: <b className="text-[#fedeb2]">{result.code}</b>
           </p>
+          {/* QR check-in — quét tại quầy lễ tân */}
+          <div className="mx-auto mt-6 flex w-fit items-center gap-5 border border-white/12 bg-white/[0.04] p-5">
+            <QRCodeSVG value={result.code} size={112} bgColor="transparent" fgColor="#f7f5f0" />
+            <p className="max-w-[180px] text-left text-xs leading-relaxed text-white/60">
+              QR check-in của bạn.<br />Chụp màn hình &amp; xuất trình tại quầy lễ tân.
+            </p>
+          </div>
           <div className="mx-auto mt-6 grid max-w-lg grid-cols-2 gap-4 border-y border-white/12 py-5 text-center">
             <div><p className="label-uppercase text-[10px] text-white/50">Tổng kỳ nghỉ</p><p className="font-display mt-1 text-2xl">{vnd(result.total)}</p></div>
             <div><p className="label-uppercase text-[10px] text-white/50">Cọc 30% để xác nhận</p><p className="font-display mt-1 text-2xl text-[#fedeb2]">{vnd(result.deposit)}</p></div>

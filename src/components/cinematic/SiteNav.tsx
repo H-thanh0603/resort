@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 const LINKS = [
   { label: "Khu nghỉ dưỡng", href: "/#place", img: "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1600&q=70" },
@@ -78,44 +79,56 @@ export default function SiteNav() {
         </div>
       </header>
 
-      {/* Fullscreen menu */}
-      <div
-        className={`fixed inset-0 z-[60] bg-[#101010] text-[#f7f5f0] transition-all duration-700 ${
-          open ? "visible opacity-100" : "invisible opacity-0"
-        }`}
-      >
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-0 transition-opacity duration-700"
-          style={{
-            backgroundImage: hoverImg ? `url(${hoverImg})` : "none",
-            opacity: hoverImg ? 0.28 : 0,
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/40" />
-        <nav className="relative flex h-full flex-col justify-center gap-1 px-8 lg:px-24">
-          {LINKS.map((l, i) => (
-            <a
-              key={l.label}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              onMouseEnter={() => setHoverImg(l.img)}
-              onMouseLeave={() => setHoverImg(null)}
-              className={`group flex items-baseline gap-5 transition-all duration-500 hover:pl-4 ${
-                open ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-              }`}
-              style={{ transitionDelay: open ? `${120 + i * 60}ms` : "0ms" }}
-            >
-              <span className="font-mono text-xs text-[#c5a880]">0{i + 1}</span>
-              <span className="font-display text-[11vw] leading-[1.05] transition-colors group-hover:text-[#c5a880] sm:text-6xl lg:text-7xl">
-                {l.label}
-              </span>
-            </a>
-          ))}
-          <p className="mt-10 text-xs uppercase tracking-[0.3em] text-white/40">
-            Bãi Khem, Phú Quốc — Concierge 24/7
-          </p>
-        </nav>
-      </div>
+      {/* Fullscreen menu — AnimatePresence + stagger vật lý */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.45 }}
+            className="fixed inset-0 z-[60] bg-[#101010] text-[#f7f5f0]"
+          >
+            <div
+              className="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
+              style={{
+                backgroundImage: hoverImg ? `url(${hoverImg})` : "none",
+                opacity: hoverImg ? 0.28 : 0,
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/40" />
+            <nav className="relative flex h-full flex-col justify-center gap-1 px-8 lg:px-24">
+              {LINKS.map((l, i) => (
+                <motion.a
+                  key={l.label}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  onMouseEnter={() => setHoverImg(l.img)}
+                  onMouseLeave={() => setHoverImg(null)}
+                  initial={{ opacity: 0, y: 44 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ delay: 0.1 + i * 0.06, type: "spring", stiffness: 90, damping: 18 }}
+                  className="group flex items-baseline gap-5 hover:pl-4 transition-[padding] duration-300"
+                >
+                  <span className="font-mono text-xs text-[#c5a880]">0{i + 1}</span>
+                  <span className="font-display text-[11vw] leading-[1.05] transition-colors group-hover:text-[#c5a880] sm:text-6xl lg:text-7xl">
+                    {l.label}
+                  </span>
+                </motion.a>
+              ))}
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="mt-10 text-xs uppercase tracking-[0.3em] text-white/40"
+              >
+                Bãi Khem, Phú Quốc — Concierge 24/7
+              </motion.p>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

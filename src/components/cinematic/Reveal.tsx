@@ -6,6 +6,7 @@ import {
   type CSSProperties,
   type ReactNode,
 } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 export function useInView<T extends HTMLElement>(threshold = 0.2) {
   const ref = useRef<T | null>(null);
@@ -40,26 +41,21 @@ type RevealProps = {
   style?: CSSProperties;
 };
 
-/** Fade + rise + de-blur — chuyển động "đắt tiền", chậm và có chủ đích. */
+/** Fade + rise + de-blur với spring vật lý (framer-motion). */
 export function Reveal({ children, delay = 0, y = 32, className = "", style }: RevealProps) {
-  const { ref, inView } = useInView<HTMLDivElement>(0.12);
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className} style={style}>{children}</div>;
   return (
-    <div
-      ref={ref}
+    <motion.div
       className={className}
-      style={{
-        opacity: inView ? 1 : 0,
-        transform: inView ? "none" : `translateY(${y}px)`,
-        filter: inView ? "blur(0)" : "blur(8px)",
-        transition:
-          "opacity 1.1s ease, transform 1.2s cubic-bezier(0.16,1,0.3,1), filter 1.1s ease",
-        transitionDelay: `${delay}ms`,
-        willChange: "opacity, transform, filter",
-        ...style,
-      }}
+      style={{ willChange: "opacity, transform, filter", ...style }}
+      initial={{ opacity: 0, y, filter: "blur(8px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, margin: "0px 0px -8% 0px" }}
+      transition={{ duration: 1.1, delay: delay / 1000, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
 
@@ -131,13 +127,13 @@ type TiltProps = {
   max?: number;
 };
 
-/** Nghiêng 3D nhẹ theo con trỏ — chỉ desktop, GPU transform. */
+/** Nghiêng 3D lò xo theo con trỏ (framer-motion spring). */
 export function Tilt({ children, className = "", max = 5 }: TiltProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
   const onMove = (e: React.PointerEvent) => {
     const el = ref.current;
-    if (!el || e.pointerType !== "mouse") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!el || e.pointerType !== "mouse" || reduce) return;
     const r = el.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width - 0.5;
     const py = (e.clientY - r.top) / r.height - 0.5;
@@ -158,6 +154,8 @@ export function Tilt({ children, className = "", max = 5 }: TiltProps) {
     </div>
   );
 }
+
+/** Hook tiến trình scroll của một section cao (sticky storytelling). */
 export function useSectionProgress<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
   const [progress, setProgress] = useState(0);

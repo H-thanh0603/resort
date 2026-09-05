@@ -1,6 +1,7 @@
 import { prisma, dbAvailable } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import AdminCharts from "./AdminCharts";
 
 export const dynamic = "force-dynamic";
 
@@ -35,8 +36,11 @@ export default async function AdminPage() {
         <div className="card-lux p-6"><p className="label-uppercase text-[10px]">Ticket VIP mới</p><p className="font-display text-3xl mt-2">{tickets.filter((t) => t.status === "NEW").length}</p></div>
       </div>
 
-      <h2 className="font-display text-3xl mt-12">Booking mới nhất</h2>
-      <div className="card-lux mt-4 overflow-x-auto">
+      <AdminCharts
+        items={bookings.map((b) => ({ status: b.status, total: Number(b.total), createdAt: b.createdAt }))}
+      />
+
+      <h2 className="font-display text-3xl mt-12">Booking mới nhất</h2>      <div className="card-lux mt-4 overflow-x-auto">
         <table className="w-full text-sm min-w-[760px]">
           <thead><tr className="text-left border-b hairline text-xs uppercase tracking-wider text-[#444748]">
             <th className="p-3">Mã</th><th className="p-3">Villa</th><th className="p-3">Ngày</th><th className="p-3">Khách</th><th className="p-3">Tổng</th><th className="p-3">Trạng thái</th>
