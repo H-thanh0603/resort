@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme {
+  --color-alabaster: #f7f5f0;
+  --color-surface: #fbf9f4;
+  --color-obsidian: #161616;
+  --color-champagne: #c5a880;
+  --color-bronze: #8c6d46;
+  --color-seaslate: #1f363d;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+:root {
+  --background: #f7f5f0;
+  --foreground: #161616;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-serif);
+}
+
+.hairline {
+  border-color: rgba(22, 22, 22, 0.08);
+}
+
+.btn-lux {
+  background: #161616;
+  color: #f7f5f0;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 18px 36px;
+  border-radius: 0;
+  transition: background 0.3s;
+}
+.btn-lux:hover {
+  background: #2a2a2a;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(22, 22, 22, 0.25);
+  color: #161616;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 16px 32px;
+  border-radius: 0;
+  transition: all 0.3s;
+}
+.btn-ghost:hover {
+  border-color: #c5a880;
+  background: #fff;
+}
+
+.label-uppercase {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.card-lux {
+  background: #fff;
+  border: 1px solid rgba(22, 22, 22, 0.06);
+  box-shadow: 0 4px 24px -2px rgba(22, 22, 22, 0.03);
+}
+
+.input-lux {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(22, 22, 22, 0.2);
+  padding: 12px 2px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.input-lux:focus {
+  border-bottom-color: #c5a880;
+}
