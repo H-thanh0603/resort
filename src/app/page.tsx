@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useState, type CSSProperties } from "react";
 import { Reveal, useSectionProgress } from "@/components/cinematic/Reveal";
+import { SceneHead } from "@/components/cinematic/Editorial";
 import Preloader from "@/components/cinematic/Preloader";
 import Marquee from "@/components/cinematic/Marquee";
 import Manifesto from "@/components/cinematic/Manifesto";
 import Voices from "@/components/cinematic/Voices";
 import VillaVoyage from "@/components/cinematic/VillaVoyage";
-import ResortMap from "@/components/cinematic/ResortMap";
+import Discover from "@/components/cinematic/Discover";
 import Experiences from "@/components/cinematic/Experiences";
 import { Dining, Wellness, SunsetMoment } from "@/components/cinematic/DiningWellness";
 import BookingFloat from "@/components/cinematic/BookingFloat";
@@ -88,7 +89,7 @@ function HeroArrival() {
         >
           Khu nghỉ dưỡng — Phú Quốc
         </p>
-        <h1 className="font-display mx-auto mt-6 max-w-5xl text-[13vw] leading-[1.04] sm:text-7xl lg:text-8xl">
+        <h1 className="font-display display-xl mx-auto mt-6 max-w-6xl">
           <span style={line(0)}>
             <span style={inner(2100)}>Chạm vào thiên nhiên.</span>
           </span>
@@ -148,7 +149,8 @@ function ThePlace() {
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
         <div className="pointer-events-none absolute inset-0 flex items-start justify-center pt-[13vh]" style={{ opacity: textOut }}>
           <div className="px-6 text-center">
-            <p className="label-uppercase text-[11px] text-[#8c6d46]">The Place</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.4em] text-[#c5a880]">02</p>
+            <p className="label-uppercase mt-3 text-[11px] text-[#8c6d46]">The Place</p>
             <h2 className="font-display mx-auto mt-4 max-w-4xl text-4xl leading-[1.12] sm:text-6xl">
               Một nơi được tạo ra
               <br />
@@ -170,7 +172,7 @@ function ThePlace() {
             src="https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=2200&q=75"
             alt="Toàn cảnh Aura Sanctuary từ trên cao"
             loading="lazy"
-            className="absolute inset-0 h-[120%] w-full object-cover"
+            className="img-grade absolute inset-0 h-[120%] w-full object-cover"
             style={{ transform: `translateY(${(0.5 - progress) * 12}%) scale(${1.25 - expand * 0.25})`, willChange: "transform" }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" style={{ opacity: expand }} />
@@ -186,7 +188,7 @@ function ThePlace() {
   );
 }
 
-/** Dải gallery editorial bất đối xứng — click fullscreen native. */
+/** Dải gallery editorial bất đối xứng + grade đồng bộ, click fullscreen. */
 function Gallery() {
   const shots = [
     { src: "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1400&q=70", cap: "Bình minh trên đại dương.", big: true },
@@ -195,13 +197,15 @@ function Gallery() {
     { src: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=1400&q=70", cap: "Vườn nhiệt đới.", big: true },
   ];
   return (
-    <section className="bg-[#fbf9f4] py-24 lg:py-32">
+    <section className="bg-[#fbf9f4] py-32 lg:py-48">
       <div className="mx-auto max-w-[1440px] px-5 lg:px-12">
-        <Reveal>
-          <p className="label-uppercase text-[11px] text-[#8c6d46]">Bộ sưu tập</p>
-          <h2 className="font-display mt-3 text-4xl sm:text-5xl">Nhìn qua khung hình.</h2>
-        </Reveal>
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-12">
+        <SceneHead
+          no="08"
+          label="Bộ sưu tập"
+          title={<>Nhìn qua<br /><span className="italic text-[#8c6d46]">khung hình.</span></>}
+          meta={["04 khung hình", "Chạm để phóng to"]}
+        />
+        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-12">
           {shots.map((s, i) => (
             <Reveal key={s.src} delay={(i % 2) * 100} className={s.big ? "sm:col-span-7" : "sm:col-span-5"}>
               <figure className="group overflow-hidden bg-black" data-cursor="Xem">
@@ -214,12 +218,12 @@ function Gallery() {
                     if (document.fullscreenElement) document.exitFullscreen();
                     else el.requestFullscreen?.().catch(() => {});
                   }}
-                  className="aspect-[16/10] w-full object-cover opacity-95 transition-all duration-[1500ms] group-hover:scale-105 group-hover:opacity-100"
+                  className="img-grade aspect-[16/10] w-full object-cover opacity-95 transition-all duration-[1500ms] group-hover:scale-105 group-hover:opacity-100"
                 />
               </figure>
-              <figcaption className="mt-3 flex justify-between text-xs text-[#444748]">
-                <span className="italic">{s.cap}</span>
-                <span className="font-mono">0{i + 1} / 04</span>
+              <figcaption className="mt-3 flex justify-between font-mono text-[11px] uppercase tracking-[0.2em] text-black/45">
+                <span className="italic normal-case tracking-normal">{s.cap}</span>
+                <span>0{i + 1} / 04</span>
               </figcaption>
             </Reveal>
           ))}
@@ -229,38 +233,36 @@ function Gallery() {
   );
 }
 
-/** Liên hệ concierge — form thật nối /api/tickets. */
+/** Liên hệ concierge — form gạch chân tối giản, nối /api/tickets thật. */
 function Contact() {
   return (
-    <section id="contact" className="bg-[#f7f5f0] px-5 pb-28">
-      <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-10 lg:grid-cols-2">
-        <Reveal>
-          <p className="label-uppercase text-[11px] text-[#8c6d46]">Kênh ưu tiên</p>
-          <h2 className="font-display mt-3 text-4xl leading-tight sm:text-5xl">
-            Lời mời kỳ nghỉ
-            <br />
-            riêng tư.
-          </h2>
-          <p className="mt-4 max-w-md font-light text-[#444748]">
-            Full buyout, tiệc cưới bí mật, hội nghị lãnh đạo — quản gia trưởng phản hồi trong 12 giờ,
-            bảo mật danh tính tuyệt đối.
-          </p>
-          <ul className="mt-6 space-y-2 text-sm">
-            <li>✈ 25 phút Rolls-Royce từ sân bay quốc tế</li>
-            <li>🚁 Bãi đáp trực thăng trong khuôn viên</li>
-            <li>🛥 Bến du thuyền đến 120ft</li>
-          </ul>
-        </Reveal>
+    <section id="contact" className="bg-[#f7f5f0] px-5 py-32 lg:py-40">
+      <div className="mx-auto grid max-w-[1200px] grid-cols-1 gap-14 lg:grid-cols-2">
+        <div>
+          <SceneHead
+            no="09"
+            label="Kênh ưu tiên"
+            title={<>Lời mời kỳ nghỉ<br /><span className="italic text-[#8c6d46]">riêng tư.</span></>}
+            lede="Full buyout, tiệc cưới bí mật, hội nghị lãnh đạo — quản gia trưởng phản hồi trong 12 giờ, bảo mật danh tính tuyệt đối."
+          />
+          <Reveal delay={200}>
+            <ul className="mt-8 space-y-3 border-t hairline pt-6 font-mono text-[11px] uppercase tracking-[0.22em] text-black/50">
+              <li>✈ &nbsp;25 phút Rolls-Royce từ sân bay</li>
+              <li>🚁 &nbsp;Bãi đáp trực thăng trong khuôn viên</li>
+              <li>🛥 &nbsp;Bến du thuyền đến 120ft</li>
+            </ul>
+          </Reveal>
+        </div>
         <Reveal delay={120}>
-          <form action="/api/tickets" method="post" className="card-lux space-y-4 p-8">
-            <input name="name" required placeholder="Họ tên *" className="input-lux" />
-            <div className="grid grid-cols-2 gap-4">
+          <form action="/api/tickets" method="post" className="space-y-7 lg:pt-24">
+            <input name="name" required placeholder="Họ tên *" className="input-lux !text-lg" />
+            <div className="grid grid-cols-2 gap-6">
               <input name="phone" required placeholder="Điện thoại *" className="input-lux" />
               <input name="email" type="email" required placeholder="Email *" className="input-lux" />
             </div>
             <textarea name="message" rows={3} required placeholder="Yêu cầu đặc biệt..." className="input-lux" />
-            <button className="btn-lux w-full" data-magnetic data-cursor="Gửi">
-              Gửi đến quản gia trưởng
+            <button className="btn-lux" data-magnetic data-cursor="Gửi">
+              Gửi đến quản gia trưởng →
             </button>
           </form>
         </Reveal>
@@ -279,7 +281,7 @@ export default function Home() {
       <ThePlace />
       <VillaVoyage />
       <Marquee dark items={["Ocean Villa", "Canopy Sanctuary", "Presidential Estate", "Infinity Pool"]} />
-      <ResortMap />
+      <Discover />
       <Experiences />
       <Dining />
       <Wellness />
@@ -287,10 +289,10 @@ export default function Home() {
       <Voices />
       <Gallery />
       <BookingFloat />
-      <section className="bg-[#101010] px-6 py-28 text-center text-[#f7f5f0] lg:py-40">
+      <section className="bg-[#101010] px-6 pb-28 pt-4 text-center text-[#f7f5f0] lg:pb-40">
         <Reveal>
           <p className="label-uppercase text-[11px] tracking-[0.34em] text-[#c5a880]">Begin</p>
-          <h2 className="font-display mx-auto mt-6 max-w-6xl text-[12vw] leading-[1.02] sm:text-7xl lg:text-8xl">
+          <h2 className="font-display display-xl mx-auto mt-6 max-w-6xl">
             Kỳ nghỉ tiếp theo
             <br />
             <span className="italic text-[#fedeb2]">bắt đầu từ đây.</span>

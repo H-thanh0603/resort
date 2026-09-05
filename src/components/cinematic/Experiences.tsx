@@ -36,7 +36,7 @@ export default function Experiences() {
             src={m.img}
             alt=""
             loading={i === 0 ? "eager" : "lazy"}
-            className="absolute inset-0 h-full w-full object-cover transition-all duration-[1200ms]"
+            className="img-grade absolute inset-0 h-full w-full object-cover transition-all duration-[1200ms]"
             style={{
               opacity: i === active ? 1 : 0,
               transform: `scale(${i === active ? 1 : 1.1})`,

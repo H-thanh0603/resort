@@ -66,7 +66,7 @@ export default function VillaVoyage() {
                   src={v.image}
                   alt={v.name}
                   draggable={false}
-                  className="absolute inset-0 h-full w-full select-none object-cover"
+                  className="img-grade absolute inset-0 h-full w-full select-none object-cover"
                   style={{
                     opacity: 0.35 + focus * 0.65,
                     transform: `translateX(${(progress * (n - 1) - i) * 70}px) scale(${1.12 - focus * 0.08})`,
@@ -74,6 +74,7 @@ export default function VillaVoyage() {
                     willChange: "transform",
                   }}
                 />
+                <div className="grade-warm absolute inset-0" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/30" />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent" />
                 <div
@@ -83,13 +84,13 @@ export default function VillaVoyage() {
                   <p className="label-uppercase text-[11px] text-[#fedeb2]">
                     0{i + 1} — {v.category}
                   </p>
-                  <h3 className="font-display mt-3 max-w-3xl text-5xl leading-[1.05] sm:text-6xl lg:text-7xl">
+                  <h3 className="font-display display-lg mt-3 max-w-4xl">
                     {v.name}
                   </h3>
-                  <p className="mt-4 max-w-xl font-light leading-relaxed text-white/75">
+                  <p className="mt-5 max-w-xl font-light leading-relaxed text-white/75">
                     {v.description}
                   </p>
-                  <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-sm text-white/80">
+                  <div className="mt-7 flex flex-wrap gap-x-10 gap-y-2 border-t border-white/20 pt-5 font-mono text-[11px] uppercase tracking-[0.22em] text-white/65">
                     <span>{v.area} m²</span>
                     <span>{v.bedrooms} phòng ngủ</span>
                     <span>{v.guests} khách</span>

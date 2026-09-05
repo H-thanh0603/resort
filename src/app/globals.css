@@ -238,6 +238,58 @@ body {
   }
 }
 
+/* ------- Unified photographic grade: mọi ảnh như cùng một buổi chụp ------- */
+.img-grade {
+  filter: saturate(0.84) contrast(1.07) sepia(0.16) brightness(0.99);
+}
+.grade-warm {
+  background: linear-gradient(160deg, rgba(197, 168, 128, 0.22), rgba(31, 54, 61, 0.18));
+  mix-blend-mode: soft-light;
+}
+
+/* Drop cap editorial */
+.dropcap::first-letter {
+  font-family: var(--font-serif);
+  font-size: 4.4em;
+  float: left;
+  line-height: 0.82;
+  padding-right: 0.14em;
+  padding-top: 0.05em;
+  color: #8c6d46;
+}
+
+/* Input underline trên nền tối */
+.input-line {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(247, 245, 240, 0.28);
+  padding: 14px 2px;
+  font-size: 17px;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  outline: none;
+  transition: border-color 0.4s;
+  color: #f7f5f0;
+}
+.input-line::placeholder {
+  color: rgba(247, 245, 240, 0.38);
+}
+.input-line:focus {
+  border-bottom-color: #c5a880;
+}
+
+/* Display clamp editorial */
+.display-xl {
+  font-size: clamp(2.9rem, 7.2vw, 6.8rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+.display-lg {
+  font-size: clamp(2.2rem, 4.6vw, 4.2rem);
+  line-height: 1.06;
+}
+
 /* Custom cursor: ẩn con trỏ mặc định trên desktop khi cursor hoạt động */
 .has-cursor,
 .has-cursor a,

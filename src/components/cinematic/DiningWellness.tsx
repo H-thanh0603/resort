@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Counter, Reveal, Tilt, useInView } from "./Reveal";
+import { SceneHead } from "./Editorial";
 
 const TABS = [
   { id: "sang", label: "Bữa sáng", title: "Bình minh trên sundeck.", desc: "Trái cây vườn nhiệt đới, bánh mì men tự nhiên, cà phê rang mộc.", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1800&q=70" },
@@ -13,16 +14,14 @@ const TABS = [
 export function Dining() {
   const [tab, setTab] = useState(TABS[1]);
   return (
-    <section id="dining" className="bg-[#fbf9f4] py-24 lg:py-36">
+    <section id="dining" className="bg-[#fbf9f4] py-32 lg:py-48">
       <div className="mx-auto max-w-[1440px] px-5 lg:px-12">
-        <Reveal>
-          <p className="label-uppercase text-[11px] text-[#8c6d46]">Ẩm thực</p>
-          <h2 className="font-display mt-3 max-w-3xl text-4xl leading-[1.1] sm:text-6xl">
-            Hương vị của
-            <br />
-            những điều tinh tế.
-          </h2>
-        </Reveal>
+        <SceneHead
+          no="06"
+          label="Ẩm thực"
+          title={<>Hương vị của<br /><span className="italic text-[#8c6d46]">những điều tinh tế.</span></>}
+          lede="Từ bình minh trên sundeck đến dạ tiệc 99 ngọn nến — mỗi bữa ăn là một chương."
+        />
         <Reveal delay={120}>
           <div className="mt-8 flex flex-wrap gap-2">
             {TABS.map((t) => (
@@ -43,7 +42,8 @@ export function Dining() {
           <div className="overflow-hidden lg:col-span-8" data-cursor="Thưởng thức">
             <Tilt max={3}>
               <div key={tab.id} className="kenburns relative aspect-[16/10] overflow-hidden">
-                <img src={tab.img} alt={tab.title} className="h-full w-full object-cover transition-transform duration-[2000ms] hover:scale-105" />
+                <img src={tab.img} alt={tab.title} className="img-grade h-full w-full object-cover transition-transform duration-[2000ms] hover:scale-105" />
+                <div className="grade-warm absolute inset-0" />
               </div>
             </Tilt>
           </div>
@@ -74,7 +74,8 @@ export function Wellness() {
       <div className="absolute inset-0 bg-gradient-to-b from-[#0d1517] via-transparent to-[#0d1517]" />
       <div className="relative mx-auto max-w-[1100px] px-6 text-center">
         <Reveal>
-          <p className="label-uppercase text-[11px] text-[#fedeb2]">Wellness — chậm lại</p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.4em] text-[#c5a880]">07</p>
+          <p className="label-uppercase mt-3 text-[11px] text-[#fedeb2]">Wellness — chậm lại</p>
           <h2 className="font-display mx-auto mt-4 max-w-3xl text-5xl leading-[1.1] sm:text-7xl">
             Hãy để thế giới
             <br />
