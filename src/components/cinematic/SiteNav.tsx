@@ -7,6 +7,7 @@ const LINKS = [
   { label: "Trải nghiệm", href: "/#experiences", img: "https://images.unsplash.com/photo-1540946485063-a40da27545f8?auto=format&fit=crop&w=1600&q=70" },
   { label: "Ẩm thực", href: "/#dining", img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=70" },
   { label: "Wellness", href: "/#wellness", img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1600&q=70" },
+  { label: "Hành trình của bạn", href: "/#atelier", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=70" },
   { label: "Bộ sưu tập", href: "/villas", img: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1600&q=70" },
   { label: "Đặt kỳ nghỉ", href: "/booking", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=70" },
 ];

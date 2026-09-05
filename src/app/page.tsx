@@ -5,6 +5,7 @@ import { SceneHead } from "@/components/cinematic/Editorial";
 import Preloader from "@/components/cinematic/Preloader";
 import Marquee from "@/components/cinematic/Marquee";
 import Manifesto from "@/components/cinematic/Manifesto";
+import EscapeBuilder from "@/components/cinematic/EscapeBuilder";
 import Voices from "@/components/cinematic/Voices";
 import VillaVoyage from "@/components/cinematic/VillaVoyage";
 import Discover from "@/components/cinematic/Discover";
@@ -200,7 +201,7 @@ function Gallery() {
     <section className="bg-[#fbf9f4] py-32 lg:py-48">
       <div className="mx-auto max-w-[1440px] px-5 lg:px-12">
         <SceneHead
-          no="08"
+          no="07"
           label="Bộ sưu tập"
           title={<>Nhìn qua<br /><span className="italic text-[#8c6d46]">khung hình.</span></>}
           meta={["04 khung hình", "Chạm để phóng to"]}
@@ -288,6 +289,7 @@ export default function Home() {
       <SunsetMoment />
       <Voices />
       <Gallery />
+      <EscapeBuilder />
       <BookingFloat />
       <section className="bg-[#101010] px-6 pb-28 pt-4 text-center text-[#f7f5f0] lg:pb-40">
         <Reveal>

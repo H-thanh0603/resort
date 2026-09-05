@@ -23,7 +23,12 @@ function BookingInner() {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState(sp.get("villa") ?? "");
-  const [services, setServices] = useState<string[]>(sp.get("service") ? [sp.get("service")!] : []);
+  const [services, setServices] = useState<string[]>(() => {
+    const multi = sp.get("services");
+    if (multi) return multi.split(",").filter(Boolean);
+    const single = sp.get("service");
+    return single ? [single] : [];
+  });
   const [form, setForm] = useState({ guestName: "", guestPhone: "", guestEmail: "", promoCode: "AURAVIP" });
   const [result, setResult] = useState<{ code: string; total: number; deposit: number } | null>(null);
   const [error, setError] = useState("");
@@ -82,7 +87,14 @@ function BookingInner() {
                   <input type="radio" checked={selected === i.slug} onChange={() => setSelected(i.slug)} disabled={!i.available} />
                   <span>
                     <b>{i.name}</b>
-                    <span className="block text-xs text-[#444748]">{i.nights} đêm • còn {i.availableUnits} căn • {vnd(i.pricePerNight)}/đêm</span>
+                    <span className="block text-xs text-[#444748]">{i.nights} đêm • {vnd(i.pricePerNight)}/đêm</span>
+                    {i.available && i.availableUnits <= 2 ? (
+                      <span className="mt-1 inline-block bg-[#c5a880]/15 px-2 py-0.5 text-[11px] font-semibold text-[#8c6d46]">
+                        ✦ Chỉ còn {i.availableUnits} căn — giữ ngay
+                      </span>
+                    ) : (
+                      <span className="block text-xs text-[#444748]">Còn {i.availableUnits} căn</span>
+                    )}
                   </span>
                 </span>
                 <b>{vnd(i.total)}</b>
@@ -110,13 +122,24 @@ function BookingInner() {
       )}
 
       {result && (
-        <div className="mt-8 bg-[#161616] text-white p-8 rounded-2xl">
-          <h2 className="font-display text-3xl">Giữ chỗ thành công 🎉</h2>
-          <p className="mt-2">Mã giữ chỗ: <b className="text-[#fedeb2]">{result.code}</b></p>
-          <p>Tổng: <b>{vnd(result.total)}</b> • Cọc 30%: <b>{vnd(result.deposit)}</b></p>
-          <div className="flex gap-3 mt-5">
-            <a href={`/checkout?code=${result.code}`} className="bg-[#c5a880] text-black px-6 py-3 text-xs font-semibold tracking-widest uppercase">Thanh toán ngay</a>
-            <button onClick={() => setResult(null)} className="border border-white/30 px-6 py-3 text-xs tracking-widest uppercase">Đặt thêm</button>
+        <div className="grain relative mt-8 overflow-hidden bg-[#101010] p-8 text-white sm:p-12">
+          <p className="label-uppercase text-center text-[10px] tracking-[0.34em] text-[#c5a880]">✦ &nbsp;Giữ chỗ thành công&nbsp; ✦</p>
+          <h2 className="font-display mt-4 text-center text-4xl sm:text-5xl">
+            Kỳ nghỉ của bạn<br /><span className="italic text-[#fedeb2]">đã được giữ chỗ.</span>
+          </h2>
+          <p className="mt-4 text-center font-mono text-sm tracking-[0.2em] text-white/70">
+            Mã giữ chỗ: <b className="text-[#fedeb2]">{result.code}</b>
+          </p>
+          <div className="mx-auto mt-6 grid max-w-lg grid-cols-2 gap-4 border-y border-white/12 py-5 text-center">
+            <div><p className="label-uppercase text-[10px] text-white/50">Tổng kỳ nghỉ</p><p className="font-display mt-1 text-2xl">{vnd(result.total)}</p></div>
+            <div><p className="label-uppercase text-[10px] text-white/50">Cọc 30% để xác nhận</p><p className="font-display mt-1 text-2xl text-[#fedeb2]">{vnd(result.deposit)}</p></div>
+          </div>
+          <p className="mt-5 text-center text-sm font-light text-white/65">
+            Quản gia trưởng sẽ liên hệ trong 12 giờ để sắp xếp đón tiễn, thực đơn và liệu trình.
+          </p>
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <a href={`/checkout?code=${result.code}`} data-cursor="Thanh toán" className="bg-[#c5a880] px-8 py-4 text-xs font-semibold uppercase tracking-widest text-black transition hover:bg-[#fedeb2]">Thanh toán ngay →</a>
+            <button onClick={() => setResult(null)} className="border border-white/30 px-8 py-4 text-xs uppercase tracking-widest transition hover:border-white/70">Đặt thêm</button>
           </div>
         </div>
       )}
