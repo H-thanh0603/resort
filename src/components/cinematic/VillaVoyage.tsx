@@ -66,11 +66,12 @@ export default function VillaVoyage() {
                   src={v.image}
                   alt={v.name}
                   draggable={false}
-                  className="slow-drift absolute inset-0 h-full w-full select-none object-cover"
+                  className="absolute inset-0 h-full w-full select-none object-cover"
                   style={{
                     opacity: 0.35 + focus * 0.65,
-                    transform: `scale(${1.12 - focus * 0.08})`,
+                    transform: `translateX(${(progress * (n - 1) - i) * 70}px) scale(${1.12 - focus * 0.08})`,
                     filter: `blur(${(1 - focus) * 6}px)`,
+                    willChange: "transform",
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/30" />
@@ -112,6 +113,15 @@ export default function VillaVoyage() {
         </div>
 
         {/* Indicator 01 — 03 + arrows */}
+        <div className="absolute inset-x-0 top-0 z-20 h-[2px] bg-white/10">
+          <div className="h-full bg-[#c5a880]" style={{ width: `${((active + 1) / n) * 100}%` }} />
+        </div>
+        <div className="absolute left-6 top-24 z-20 lg:left-16">
+          <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#c5a880]">Scene 03</p>
+          <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.4em] text-white/50">
+            Private Spaces — kéo để đi qua
+          </p>
+        </div>
         <div className="absolute bottom-8 left-0 right-0 z-20 mx-auto flex max-w-[1440px] items-center justify-between px-6 lg:px-16">
           <p className="font-mono text-sm tracking-[0.3em] text-white/70">
             0{active + 1} <span className="text-white/30">— 0{n}</span>

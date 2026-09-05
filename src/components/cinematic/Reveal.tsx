@@ -98,7 +98,66 @@ export function Counter({ to, pad = 2, duration = 1600, className = "" }: Counte
   );
 }
 
-/** Hook tiến trình scroll của một section cao (sticky storytelling). */
+/** Thẻ cảnh kiểu phim: "SCENE 03 — PRIVATE SPACES". */
+export function SceneTag({
+  no,
+  title,
+  light = false,
+  className = "",
+}: {
+  no: string;
+  title: string;
+  light?: boolean;
+  className?: string;
+}) {
+  return (
+    <div className={`flex items-center gap-4 ${className}`}>
+      <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#c5a880]">{no}</span>
+      <span className={`h-px w-14 ${light ? "bg-white/30" : "bg-black/25"}`} />
+      <span
+        className={`text-[10px] font-semibold uppercase tracking-[0.4em] ${
+          light ? "text-white/60" : "text-black/50"
+        }`}
+      >
+        {title}
+      </span>
+    </div>
+  );
+}
+
+type TiltProps = {
+  children: ReactNode;
+  className?: string;
+  max?: number;
+};
+
+/** Nghiêng 3D nhẹ theo con trỏ — chỉ desktop, GPU transform. */
+export function Tilt({ children, className = "", max = 5 }: TiltProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const onMove = (e: React.PointerEvent) => {
+    const el = ref.current;
+    if (!el || e.pointerType !== "mouse") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    el.style.transform = `perspective(1200px) rotateY(${px * max}deg) rotateX(${-py * max}deg)`;
+  };
+  const onLeave = () => {
+    if (ref.current) ref.current.style.transform = "";
+  };
+  return (
+    <div
+      ref={ref}
+      onPointerMove={onMove}
+      onPointerLeave={onLeave}
+      className={className}
+      style={{ transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)", willChange: "transform" }}
+    >
+      {children}
+    </div>
+  );
+}
 export function useSectionProgress<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
   const [progress, setProgress] = useState(0);

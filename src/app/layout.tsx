@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import SiteNav from "@/components/cinematic/SiteNav";
 import Cursor from "@/components/cinematic/Cursor";
+import SmoothScroll from "@/components/cinematic/SmoothScroll";
+import AmbientSound from "@/components/cinematic/AmbientSound";
 
 export const metadata: Metadata = {
   title: "Aura Sanctuary — Khu nghỉ dưỡng biển siêu sang",
@@ -66,7 +68,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="flex min-h-screen flex-col">
+        <SmoothScroll />
         <Cursor />
+        <AmbientSound />
         <SiteNav />
         <main className="flex-1">{children}</main>
         <Footer />

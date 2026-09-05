@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Counter, Reveal, useInView } from "./Reveal";
+import { Counter, Reveal, Tilt, useInView } from "./Reveal";
 
 const TABS = [
   { id: "sang", label: "Bữa sáng", title: "Bình minh trên sundeck.", desc: "Trái cây vườn nhiệt đới, bánh mì men tự nhiên, cà phê rang mộc.", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1800&q=70" },
@@ -41,9 +41,11 @@ export function Dining() {
         </Reveal>
         <div className="mt-10 grid grid-cols-1 items-end gap-8 lg:grid-cols-12">
           <div className="overflow-hidden lg:col-span-8" data-cursor="Thưởng thức">
-            <div key={tab.id} className="kenburns relative aspect-[16/10] overflow-hidden">
-              <img src={tab.img} alt={tab.title} className="h-full w-full object-cover transition-transform duration-[2000ms] hover:scale-105" />
-            </div>
+            <Tilt max={3}>
+              <div key={tab.id} className="kenburns relative aspect-[16/10] overflow-hidden">
+                <img src={tab.img} alt={tab.title} className="h-full w-full object-cover transition-transform duration-[2000ms] hover:scale-105" />
+              </div>
+            </Tilt>
           </div>
           <div key={`t-${tab.id}`} className="kenburns lg:col-span-4">
             <p className="label-uppercase text-[10px] text-[#8c6d46]">{tab.label}</p>
@@ -138,6 +140,15 @@ export function SunsetMoment() {
       {/* Ánh hoàng hôn phủ lên sóng biển */}
       <div className="absolute inset-0 bg-gradient-to-tr from-[#8c4a1f]/45 via-transparent to-[#1f363d]/40" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/60" />
+      {/* Letterbox khép lại khi cảnh tới */}
+      <div
+        className="absolute inset-x-0 top-0 z-10 bg-black transition-all duration-[1600ms]"
+        style={{ height: inView ? "9vh" : "0vh" }}
+      />
+      <div
+        className="absolute inset-x-0 bottom-0 z-10 bg-black transition-all duration-[1600ms]"
+        style={{ height: inView ? "9vh" : "0vh" }}
+      />
       <div className="relative px-6 text-center">
         <p
           className="font-mono text-xs uppercase tracking-[0.4em] text-[#fedeb2] transition-all delay-300 duration-1000"

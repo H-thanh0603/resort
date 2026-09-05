@@ -69,6 +69,9 @@ function HeroArrival() {
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40" />
       {/* Vệt sáng hoàng hôn */}
       <div className="absolute inset-0 bg-gradient-to-tr from-[#8c6d46]/25 via-transparent to-[#1f363d]/30" />
+      {/* Letterbox điện ảnh */}
+      <div className="absolute inset-x-0 top-0 z-10 h-[7vh] bg-gradient-to-b from-black/80 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 z-10 h-[9vh] bg-gradient-to-t from-black/85 to-transparent" />
 
       {/* Chữ dọc hai bên */}
       <p className="absolute left-6 top-1/2 hidden -translate-y-1/2 -rotate-90 text-[10px] font-semibold uppercase tracking-[0.4em] text-white/50 lg:block">
@@ -90,7 +93,7 @@ function HeroArrival() {
             <span style={inner(2100)}>Chạm vào thiên nhiên.</span>
           </span>
           <span style={line(0)}>
-            <span style={inner(2250)} className="italic text-[#fedeb2]">
+            <span style={inner(2250)} className="text-outline italic">
               Sống trong sự tinh tế.
             </span>
           </span>
@@ -109,13 +112,25 @@ function HeroArrival() {
       </div>
       <a
         href="#place"
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-center"
+        className="absolute bottom-[10vh] left-1/2 z-10 -translate-x-1/2 text-center"
         style={{ opacity: fade }}
         data-cursor="Cuộn"
       >
         <p className="text-[10px] font-semibold uppercase tracking-[0.34em] text-white/80">Kéo để khám phá</p>
         <p className="scroll-hint mt-2 text-xl text-[#c5a880]">↓</p>
       </a>
+      <p
+        className="absolute bottom-[10vh] left-6 z-10 hidden font-mono text-[10px] uppercase tracking-[0.4em] text-white/50 lg:block"
+        style={{ opacity: fade }}
+      >
+        Scene 01 — The Arrival
+      </p>
+      <p
+        className="absolute bottom-[10vh] right-6 z-10 hidden font-mono text-[10px] uppercase tracking-[0.4em] text-white/50 lg:block"
+        style={{ opacity: fade }}
+      >
+        Phú Quốc — 2026
+      </p>
     </section>
   );
 }

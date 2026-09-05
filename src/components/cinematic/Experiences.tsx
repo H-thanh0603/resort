@@ -18,6 +18,14 @@ export default function Experiences() {
   const { ref, progress } = useSectionProgress<HTMLDivElement>();
   const active = Math.min(MOMENTS.length - 1, Math.floor(progress * MOMENTS.length));
 
+  const goTo = (i: number) => {
+    const el = ref.current;
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const seg = (el.offsetHeight - window.innerHeight) / MOMENTS.length;
+    window.scrollTo({ top: top + window.innerHeight * 0.6 + seg * i, behavior: "smooth" });
+  };
+
   return (
     <section id="experiences" ref={ref} className="relative bg-[#101010] text-white" style={{ height: `${(MOMENTS.length + 1) * 100}vh` }}>
       {/* Background sticky crossfade */}
@@ -42,7 +50,8 @@ export default function Experiences() {
       {/* Heading mở đầu */}
       <div className="absolute top-0 flex h-screen w-full items-center justify-center px-6 text-center">
         <Reveal>
-          <p className="label-uppercase text-[11px] text-[#fedeb2]">Những khoảnh khắc</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#c5a880]">Scene 05 — Moments</p>
+          <p className="label-uppercase mt-4 text-[11px] text-[#fedeb2]">Những khoảnh khắc</p>
           <h2 className="font-display mx-auto mt-4 max-w-4xl text-4xl leading-[1.15] sm:text-6xl">
             Kỳ nghỉ không được đo bằng ngày tháng.
           </h2>
@@ -68,6 +77,31 @@ export default function Experiences() {
               </a>
             </div>
           </div>
+        ))}
+      </div>
+
+      {/* Chapter rail — nhảy tới từng khoảnh khắc */}
+      <div className="absolute right-5 top-[115vh] z-10 hidden flex-col gap-4 md:flex lg:right-10">
+        {MOMENTS.map((m, i) => (
+          <button
+            key={m.n}
+            onClick={() => goTo(i)}
+            data-cursor={`Khoảnh khắc ${m.n}`}
+            className="group flex items-center justify-end gap-3"
+          >
+            <span
+              className={`font-mono text-[10px] tracking-[0.25em] transition-colors ${
+                i === active - 1 ? "text-[#fedeb2]" : "text-white/35 group-hover:text-white/70"
+              }`}
+            >
+              {m.n}
+            </span>
+            <span
+              className={`h-8 w-px transition-all duration-500 ${
+                i === active - 1 ? "bg-[#c5a880]" : "bg-white/20 group-hover:bg-white/50"
+              }`}
+            />
+          </button>
         ))}
       </div>
     </section>

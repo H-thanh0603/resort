@@ -227,6 +227,17 @@ body {
   scrollbar-width: none;
 }
 
+/* Chữ viền champagne — điểm nhấn editorial */
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px #fedeb2;
+}
+@media (max-width: 640px) {
+  .text-outline {
+    -webkit-text-stroke-width: 1px;
+  }
+}
+
 /* Custom cursor: ẩn con trỏ mặc định trên desktop khi cursor hoạt động */
 .has-cursor,
 .has-cursor a,

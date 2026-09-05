@@ -6,6 +6,8 @@ export default function Preloader() {
   const [count, setCount] = useState(0);
   const [done, setDone] = useState(false);
   const [gone, setGone] = useState(false);
+  const words = ["Biển", "Rừng", "Tĩnh lặng", "Aura"];
+  const word = words[Math.min(words.length - 1, Math.floor(count / 28))];
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -46,7 +48,9 @@ export default function Preloader() {
       }}
     >
       <p className="label-uppercase text-[10px] tracking-[0.4em] text-[#c5a880]">Sanctuary &amp; Retreats</p>
-      <h1 className="font-display mt-3 text-6xl tracking-[0.08em] sm:text-8xl">AURA</h1>
+      <h1 key={word} className="kenburns font-display mt-3 text-6xl tracking-[0.08em] sm:text-8xl">
+        {word === "Aura" ? "AURA" : word}
+      </h1>
       <div className="mt-8 h-px w-56 bg-white/15">
         <div className="h-full bg-[#c5a880] transition-[width]" style={{ width: `${count}%` }} />
       </div>
