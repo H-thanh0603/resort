@@ -1,0 +1,201 @@
+// Production database — multi-resort ready, PMS-style (room_type + physical units).
+// Chạy: docker compose up -d db && cp .env.example .env && npx prisma migrate dev && npm run seed
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  GUEST
+  MEMBER
+  CONCIERGE
+  RECEPTIONIST
+  MANAGER
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING_HOLD
+  CONFIRMED
+  CHECKED_IN
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum UnitStatus {
+  READY
+  OCCUPIED
+  MAINTENANCE
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  phone        String?
+  name         String
+  passwordHash String
+  role         Role     @default(GUEST)
+  tier         String   @default("STANDARD")
+  points       Int      @default(0)
+  createdAt    DateTime @default(now())
+  bookings     Booking[]
+  reviews      Review[]
+  tickets      ConciergeTicket[]
+}
+
+model Resort {
+  id        String     @id @default(cuid())
+  slug      String     @unique
+  name      String
+  location  String
+  roomTypes RoomType[]
+}
+
+model RoomType {
+  id          String   @id @default(cuid())
+  resortId    String
+  resort      Resort   @relation(fields: [resortId], references: [id], onDelete: Cascade)
+  slug        String   @unique
+  name        String
+  category    String
+  area        Int
+  maxGuests   Int
+  bedrooms    Int
+  basePrice   BigInt
+  description String
+  image       String
+  units       Unit[]
+  bookings    Booking[]
+  ratePlans   RatePlan[]
+
+  @@index([resortId])
+}
+
+model Unit {
+  id         String     @id @default(cuid())
+  roomTypeId String
+  roomType   RoomType   @relation(fields: [roomTypeId], references: [id], onDelete: Cascade)
+  code       String     @unique
+  status     UnitStatus @default(READY)
+
+  @@index([roomTypeId])
+}
+
+model RatePlan {
+  id         String   @id @default(cuid())
+  roomTypeId String
+  roomType   RoomType @relation(fields: [roomTypeId], references: [id], onDelete: Cascade)
+  date       DateTime @db.Date
+  price      BigInt
+
+  @@unique([roomTypeId, date])
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  code          String        @unique
+  userId        String?
+  user          User?         @relation(fields: [userId], references: [id])
+  roomTypeId    String
+  roomType      RoomType      @relation(fields: [roomTypeId], references: [id])
+  unitId        String?
+  checkIn       DateTime      @db.Date
+  checkOut      DateTime      @db.Date
+  guests        Int           @default(2)
+  guestName     String
+  guestPhone    String
+  guestEmail    String
+  total         BigInt
+  deposit       BigInt        @default(0)
+  status        BookingStatus @default(PENDING_HOLD)
+  holdExpiresAt DateTime?
+  promoCode     String?
+  createdAt     DateTime      @default(now())
+  payments      Payment[]
+  services      BookingService[]
+  review        Review?
+
+  @@index([roomTypeId, checkIn, checkOut, status])
+}
+
+model Service {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  name        String
+  category    String
+  price       BigInt
+  duration    String
+  description String
+  image       String
+  bookings    BookingService[]
+}
+
+model BookingService {
+  id        String   @id @default(cuid())
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  serviceId String
+  service   Service  @relation(fields: [serviceId], references: [id])
+  date      DateTime @db.Date
+  qty       Int      @default(1)
+  amount    BigInt
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  bookingId String
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  provider  String   @default("VNPAY")
+  txnId     String?  @unique
+  amount    BigInt
+  status    String   @default("PENDING")
+  raw       String?
+  createdAt DateTime @default(now())
+}
+
+model Promotion {
+  code       String   @id
+  percent    Int
+  minNights  Int      @default(1)
+  validFrom  DateTime
+  validTo    DateTime
+  memberOnly Boolean  @default(false)
+  active     Boolean  @default(true)
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  bookingId String   @unique
+  booking   Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  rating    Int
+  comment   String
+  reply     String?
+  createdAt DateTime @default(now())
+}
+
+model ConciergeTicket {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  name      String
+  phone     String
+  email     String
+  type      String   @default("GENERAL")
+  message   String
+  nda       Boolean  @default(false)
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+}
+
+model NewsletterSub {
+  email     String   @id
+  createdAt DateTime @default(now())
+}
