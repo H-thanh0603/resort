@@ -62,13 +62,9 @@ export async function POST(req: NextRequest) {
         guests: d.guests, guestName: d.guestName, guestPhone: d.guestPhone,
         guestEmail: d.guestEmail, total, deposit,
         promoCode: d.promoCode?.toUpperCase(), holdExpiresAt,
-        services: { create: pickedServices.map((s) => ({
-          serviceId: "", // gắn sau khi map slug->id
-          date: new Date(d.checkIn), qty: 1, amount: s.price,
-        })) },
       },
     });
-    // Gắn serviceId thật
+    // Gắn serviceId thật (đã resolve slug->id, bỏ nested create rỗng gây lỗi FK)
     for (const s of pickedServices) {
       const svc = await prisma.service.findUnique({ where: { slug: s.slug } });
       if (svc) await prisma.bookingService.create({

@@ -112,6 +112,16 @@ export const SERVICES: Service[] = [
       "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80",
     description: "Rạn san hô bảo tồn nghiêm ngặt, ươm cấy san hô mang tên bạn.",
   },
+  {
+    slug: "spa",
+    name: "Liệu trình Lotus Spa 90 phút",
+    category: "Spa",
+    price: 2900000,
+    duration: "90 phút",
+    image:
+      "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1200&q=80",
+    description: "Sen tuyết và đá bazan ấm, giấc ngủ sâu nguyên khí.",
+  },
 ];
 
 export const vnd = (n: number) =>
