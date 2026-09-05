@@ -7,6 +7,7 @@ import Preloader from "@/components/cinematic/Preloader";
 import Marquee from "@/components/cinematic/Marquee";
 import Manifesto from "@/components/cinematic/Manifesto";
 import EscapeBuilder from "@/components/cinematic/EscapeBuilder";
+import { MistGate, Motes, LightLeak } from "@/components/cinematic/Atmosphere";
 import Voices from "@/components/cinematic/Voices";
 import VillaVoyage from "@/components/cinematic/VillaVoyage";
 import Discover from "@/components/cinematic/Discover";
@@ -58,7 +59,7 @@ function HeroArrival() {
   });
 
   return (
-    <section className="grain relative flex h-[108vh] items-center justify-center overflow-hidden bg-[#101010] text-white">
+    <section className="grain-anim relative flex h-[108vh] items-center justify-center overflow-hidden bg-[#101010] text-white">
       {/* Ảnh nền luôn có — video phủ lên khi tải được */}
       <img src={HERO_IMG} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover" />
       {videoOk && (
@@ -79,6 +80,8 @@ function HeroArrival() {
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40" />
       {/* Vệt sáng hoàng hôn */}
       <div className="absolute inset-0 bg-gradient-to-tr from-[#8c6d46]/25 via-transparent to-[#1f363d]/30" />
+      <LightLeak />
+      <Motes count={70} />
       {/* Letterbox điện ảnh */}
       <div className="absolute inset-x-0 top-0 z-10 h-[7vh] bg-gradient-to-b from-black/80 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 z-10 h-[9vh] bg-gradient-to-t from-black/85 to-transparent" />
@@ -296,6 +299,7 @@ export default function Home() {
     <div className="bg-[#f7f5f0]">
       <Preloader />
       <HeroArrival />
+      <MistGate />
       <Marquee items={["Aura Sanctuary", "Phú Quốc", "Quiet Luxury", "Private Bay", "Michelin"]} />
       <Manifesto />
       <ThePlace />

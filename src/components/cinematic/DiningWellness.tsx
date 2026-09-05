@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Counter, Reveal, Tilt, useInView } from "./Reveal";
 import { SceneHead } from "./Editorial";
+import { Motes, GodRays } from "./Atmosphere";
 
 const TABS = [
   { id: "sang", label: "Bữa sáng", title: "Bình minh trên sundeck.", desc: "Trái cây vườn nhiệt đới, bánh mì men tự nhiên, cà phê rang mộc.", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1800&q=70" },
@@ -114,7 +115,7 @@ export function Wellness() {
 export function SunsetMoment() {
   const { ref, inView } = useInView<HTMLDivElement>(0.35);
   return (
-    <section ref={ref} className="grain relative flex h-[110vh] items-center justify-center overflow-hidden bg-black text-white">
+    <section ref={ref} className="grain-anim relative flex h-[110vh] items-center justify-center overflow-hidden bg-black text-white">
       <img
         src="https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?auto=format&fit=crop&w=2200&q=75"
         alt=""
@@ -141,6 +142,8 @@ export function SunsetMoment() {
       {/* Ánh hoàng hôn phủ lên sóng biển */}
       <div className="absolute inset-0 bg-gradient-to-tr from-[#8c4a1f]/45 via-transparent to-[#1f363d]/40" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/60" />
+      <GodRays />
+      <Motes count={80} />
       {/* Letterbox khép lại khi cảnh tới */}
       <div
         className="absolute inset-x-0 top-0 z-10 bg-black transition-all duration-[1600ms]"

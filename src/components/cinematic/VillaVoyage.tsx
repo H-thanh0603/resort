@@ -2,6 +2,7 @@
 import { useCallback, useRef } from "react";
 import { VILLAS, vnd } from "@/lib/site";
 import { useSectionProgress } from "./Reveal";
+import { Motes } from "./Atmosphere";
 
 /**
  * VILLAS — horizontal cinematic gallery.
@@ -113,7 +114,9 @@ export default function VillaVoyage() {
           })}
         </div>
 
-        {/* Indicator 01 — 03 + arrows */}
+        {/* Dải sương là là + hạt sáng trên toàn gallery */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-48 bg-gradient-to-t from-white/[0.07] to-transparent blur-md" />
+        <Motes count={45} className="z-10" />
         <div className="absolute inset-x-0 top-0 z-20 h-[2px] bg-white/10">
           <div className="h-full bg-[#c5a880]" style={{ width: `${((active + 1) / n) * 100}%` }} />
         </div>

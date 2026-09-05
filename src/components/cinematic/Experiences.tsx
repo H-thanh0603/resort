@@ -1,5 +1,6 @@
 "use client";
 import { Reveal, useSectionProgress } from "./Reveal";
+import { Motes } from "./Atmosphere";
 
 const MOMENTS = [
   { n: "01", title: "Bữa tối riêng bên biển.", desc: "99 ngọn nến sen, 7 món Michelin, một bầu trời sao.", img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2000&q=70" },
@@ -29,7 +30,7 @@ export default function Experiences() {
   return (
     <section id="experiences" ref={ref} className="relative bg-[#101010] text-white" style={{ height: `${(MOMENTS.length + 1) * 100}vh` }}>
       {/* Background sticky crossfade */}
-      <div className="grain sticky top-0 h-screen overflow-hidden">
+      <div className="grain-anim sticky top-0 h-screen overflow-hidden">
         {MOMENTS.map((m, i) => (
           <img
             key={m.n}
@@ -45,6 +46,7 @@ export default function Experiences() {
         ))}
         <div className="absolute inset-0 bg-black/45" />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/70" />
+        <Motes count={55} />
       </div>
 
       {/* Heading mở đầu */}
