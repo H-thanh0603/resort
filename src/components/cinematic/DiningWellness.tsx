@@ -107,22 +107,36 @@ export function Wellness() {
   );
 }
 
-/** SUNSET MOMENT — hero moment thứ hai: chỉ hoàng hôn và im lặng. */
+/** SUNSET MOMENT — hero moment thứ hai: video sóng biển + ánh hoàng hôn. */
 export function SunsetMoment() {
-  const { ref, inView } = useInView<HTMLDivElement>(0.4);
+  const { ref, inView } = useInView<HTMLDivElement>(0.35);
   return (
     <section ref={ref} className="grain relative flex h-[110vh] items-center justify-center overflow-hidden bg-black text-white">
       <img
         src="https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?auto=format&fit=crop&w=2200&q=75"
-        alt="Hoàng hôn trên vịnh"
-        loading="lazy"
+        alt=""
+        aria-hidden
+        className="absolute inset-0 h-full w-full object-cover"
+        style={{ opacity: 0.85 }}
+      />
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        onError={(e) => ((e.target as HTMLVideoElement).style.display = "none")}
         className="absolute inset-0 h-full w-full object-cover"
         style={{
           transform: inView ? "scale(1)" : "scale(1.12)",
           transition: "transform 4s cubic-bezier(0.16,1,0.3,1)",
-          opacity: 0.85,
+          opacity: 0.55,
         }}
-      />
+      >
+        <source src="https://videos.pexels.com/video-files/2169880/2169880-uhd_2560_1440_30fps.mp4" type="video/mp4" />
+      </video>
+      {/* Ánh hoàng hôn phủ lên sóng biển */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-[#8c4a1f]/45 via-transparent to-[#1f363d]/40" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/60" />
       <div className="relative px-6 text-center">
         <p

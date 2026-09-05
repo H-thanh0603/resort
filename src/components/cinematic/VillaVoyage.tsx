@@ -54,6 +54,14 @@ export default function VillaVoyage() {
             const focus = Math.max(0, 1 - dist);
             return (
               <article key={v.slug} className="relative h-full w-screen shrink-0 overflow-hidden">
+                {/* Số ma khổng lồ trôi ngược chiều — chiều sâu điện ảnh */}
+                <span
+                  aria-hidden
+                  className="font-display pointer-events-none absolute -top-6 right-4 z-10 select-none text-[38vw] leading-none text-white/[0.07] lg:text-[24vw]"
+                  style={{ transform: `translateX(${dist * -60}px)` }}
+                >
+                  0{i + 1}
+                </span>
                 <img
                   src={v.image}
                   alt={v.name}
