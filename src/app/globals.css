@@ -1,8 +1,8 @@
-/* Hallmark · macrostructure: Photographic · tone: luxury · anchor hue: champagne-gold
- * nav: N9 edge-aligned minimal (CTA text+arrow · wordmark serif · padding spacious)
- * footer: Ft5 statement (sentence 38ch · wordmark under · hairline rule)
- * pre-emit critique: P5 H4 E4 S5 R4 V5
- * contrast: pass (40-41) · nav: N9 · footer: Ft5 · slop: pass (42-45)
+/* Hallmark · macrostructure: Letter · tone: luxury · anchor hue: champagne-gold
+ * nav: N6 masthead (issue-above · wordmark 2xl · rule single)
+ * footer: Ft6 letter close (sign-off · P.S. newsletter · colophon)
+ * pre-emit critique: P5 H5 E4 S5 R4 V5
+ * contrast: pass (40-41) · nav: N6 · footer: Ft6 · slop: pass (42-45)
  * honest: pass (46) · chrome: pass (47) · tokens: pass (48) · responsive: pass (49)
  * icons: pass (30) · mobile: pass (34, 49, 50-57) */
 @import "tailwindcss";

@@ -2,47 +2,36 @@
 import { useEffect, useState } from "react";
 
 /**
- * N9 edge-aligned minimal — wordmark serif trái, một CTA phải,
- * khoảng trống giữa là thiết kế. Không hàng link, không menu:
- * trang là hành trình tuyến tính, các chương nối nhau in-flow.
+ * N6 newspaper masthead — issue line trên, wordmark giữa,
+ * một rule đơn, không hàng link. Trang là một lá thư;
+ * masthead là tiêu đề ấn phẩm của nó.
+ * Knobs: issue-above · wordmark 2xl · rule single.
  */
 export default function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 60);
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(total > 0 ? window.scrollY / total : 0);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <>
-      <div className="fixed inset-x-0 top-0 z-35 h-[2px]">
-        <div className="h-full origin-left bg-champagne" style={{ transform: `scaleX(${progress})` }} />
+    <header
+      className={`fixed inset-x-0 top-0 z-40 transition-colors duration-500 ${
+        scrolled ? "bg-alabaster/90 backdrop-blur-xl" : "bg-alabaster"
+      }`}
+    >
+      <div className="mx-auto max-w-[1440px] px-5 pt-4 lg:px-12">
+        <p className="text-center text-[10px] uppercase tracking-[0.3em] text-inksoft">
+          Thư từ Bãi Khem — Số 07, mùa khô 2026
+        </p>
+        <a href="/" className="font-display mt-1 block text-center text-2xl uppercase tracking-[0.12em]">
+          Aura
+        </a>
+        <hr aria-hidden="true" className="mt-3 border-0 border-t hairline" />
       </div>
-      <header
-        className={`fixed inset-x-0 top-0 z-40 transition-colors duration-500 ${
-          scrolled ? "bg-alabaster/85 text-obsidian backdrop-blur-xl" : "bg-transparent text-alabaster"
-        }`}
-      >
-        <div className="mx-auto flex min-h-[72px] items-center justify-between gap-6 px-5 py-4 lg:px-12">
-          <a href="/" className="font-display text-lg uppercase leading-none tracking-[0.14em]">
-            Aura
-          </a>
-          <a
-            href="/booking"
-            className="link-line whitespace-nowrap text-[11px] font-semibold uppercase tracking-[0.22em]"
-          >
-            Đặt kỳ nghỉ →
-          </a>
-        </div>
-      </header>
-    </>
+    </header>
   );
 }

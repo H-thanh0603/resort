@@ -12,32 +12,33 @@ export const metadata: Metadata = {
 };
 
 /**
- * Ft5 statement meta — câu closing nằm ở trang; footer chỉ giữ
- * wordmark, ba link, newsletter gọn và một dòng colophon.
+ * Ft6 letter close — khép trang như khép thư: lời chào,
+ * một dòng P.S. hồi âm, rồi colophon một dòng.
  */
 function Footer() {
   return (
     <footer className="bg-night text-shell">
-      <div className="mx-auto max-w-[1440px] px-5 lg:px-12">
-        <div className="flex flex-col gap-8 border-t border-alabaster/15 py-12 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="font-display text-2xl uppercase tracking-[0.1em]">Aura</p>
-            <p className="mt-2 text-[11px] uppercase tracking-[0.22em] text-alabaster/45">
-              Bãi Khem, Phú Quốc — 10.0245°N, 104.0322°E
-            </p>
-          </div>
-          <nav className="flex flex-wrap gap-x-8 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.22em]">
-            <a className="whitespace-nowrap hover:text-sand" href="/villas">Biệt thự</a>
-            <a className="whitespace-nowrap hover:text-sand" href="/booking">Đặt phòng</a>
-            <a className="whitespace-nowrap hover:text-sand" href="/admin">Vận hành</a>
-          </nav>
-          <form action="/api/newsletter" method="post" className="flex w-full max-w-xs items-center gap-2">
-            <input name="email" type="email" required placeholder="Email nhận Aura Journal" className="h-11 min-w-0 flex-1 border-b border-alabaster/25 bg-transparent py-2 text-sm outline-none placeholder:text-alabaster/35 focus:border-champagne" />
-            <button className="h-11 whitespace-nowrap px-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-sand">Gửi</button>
-          </form>
-        </div>
-        <p className="border-t border-alabaster/10 py-5 text-[11px] uppercase tracking-[0.2em] text-alabaster/35">
-          © {new Date().getFullYear()} Aura Sanctuary — Concierge 24/7
+      <div className="mx-auto max-w-[60ch] px-5 py-20 lg:py-28">
+        <p className="font-display text-2xl leading-snug">
+          Thân mến,
+          <br />
+          <span className="font-semibold">— Aura</span>
+        </p>
+        <form action="/api/newsletter" method="post" className="mt-8 flex items-center gap-3">
+          <span className="whitespace-nowrap text-sm text-alabaster/60">P.S. Thư hồi âm:</span>
+          <input name="email" type="email" required placeholder="email của bạn" className="h-11 min-w-0 flex-1 border-b border-alabaster/25 bg-transparent py-2 text-sm outline-none placeholder:text-alabaster/35 focus:border-champagne" />
+          <button className="h-11 whitespace-nowrap px-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-sand">Gửi</button>
+        </form>
+        <p className="tnum mt-10 border-t border-alabaster/10 pt-5 text-[11px] uppercase leading-relaxed tracking-[0.2em] text-alabaster/35">
+          Bãi Khem, Phú Quốc — 10.0245°N, 104.0322°E
+          <br />
+          <a className="hover:text-sand" href="/villas">Biệt thự</a>
+          {" · "}
+          <a className="hover:text-sand" href="/booking">Đặt phòng</a>
+          {" · "}
+          <a className="hover:text-sand" href="/admin">Vận hành</a>
+          {" — © "}
+          {new Date().getFullYear()} Aura Sanctuary
         </p>
       </div>
     </footer>

@@ -1,6 +1,16 @@
 [
   {
     "date": "2026-09-07",
+    "macrostructure": "Letter",
+    "theme": "preserve (alabaster paper · champagne-gold accent · Playfair roman display)",
+    "theme_axes": "light / high-contrast-serif-roman / warm",
+    "enrichment": "plates (static) + preloader entrance only",
+    "nav": "N6 masthead",
+    "footer": "Ft6 letter close",
+    "brief": "Aura homepage as concierge letter — soul over slides"
+  },
+  {
+    "date": "2026-09-07",
     "macrostructure": "Photographic",
     "theme": "preserve (alabaster paper · champagne-gold accent · Playfair roman display)",
     "theme_axes": "light / high-contrast-serif-roman / warm",
