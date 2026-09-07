@@ -29,7 +29,7 @@ export default function Experiences() {
   return (
     <section id="experiences" ref={ref} className="relative bg-night text-white" style={{ height: `${(MOMENTS.length + 1) * 100}vh` }}>
       {/* Background sticky crossfade */}
-      <div className="grain sticky top-0 h-screen overflow-hidden">
+      <div className="grain-anim sticky top-0 h-screen overflow-hidden">
         {MOMENTS.map((m, i) => (
           <img
             key={m.n}

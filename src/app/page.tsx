@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Preloader from "@/components/cinematic/Preloader";
+import { MistGate, LightLeak } from "@/components/cinematic/Atmosphere";
 import Manifesto from "@/components/cinematic/Manifesto";
 import EscapeBuilder from "@/components/cinematic/EscapeBuilder";
 import Voices from "@/components/cinematic/Voices";
@@ -43,7 +44,7 @@ function HeroArrival() {
   const fade = Math.max(0, 1 - y / 650);
 
   return (
-    <section className="grain relative flex h-[108vh] items-end overflow-hidden bg-night text-white">
+    <section className="grain-anim relative flex h-[108vh] items-end overflow-hidden bg-night text-white">
       <img src={HERO_IMG} alt="" aria-hidden fetchPriority="high" className="absolute inset-0 h-full w-full object-cover" />
       {videoOk && (
         <video
@@ -62,6 +63,7 @@ function HeroArrival() {
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40" />
       <div className="absolute inset-0 bg-gradient-to-tr from-ember/25 via-transparent to-seaslate/30" />
+      <LightLeak />
       <div className="absolute inset-x-0 top-0 z-10 h-[7vh] bg-gradient-to-b from-black/80 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 z-10 h-[9vh] bg-gradient-to-t from-black/85 to-transparent" />
 
@@ -228,6 +230,7 @@ export default function Home() {
     <div className="bg-alabaster">
       <Preloader />
       <HeroArrival />
+      <MistGate />
       <Manifesto />
       <ThePlace />
       <VillaVoyage />
