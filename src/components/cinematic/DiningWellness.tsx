@@ -1,8 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Counter, Reveal, Tilt, useInView } from "./Reveal";
-import { SceneHead } from "./Editorial";
-import { Motes, GodRays } from "./Atmosphere";
+import { Counter, Tilt, useInView } from "./Reveal";
 
 const TABS = [
   { id: "sang", label: "Bữa sáng", title: "Bình minh trên sundeck.", desc: "Trái cây vườn nhiệt đới, bánh mì men tự nhiên, cà phê rang mộc.", img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1800&q=70" },
@@ -15,45 +13,42 @@ const TABS = [
 export function Dining() {
   const [tab, setTab] = useState(TABS[1]);
   return (
-    <section id="dining" className="bg-[#fbf9f4] py-32 lg:py-48">
+    <section id="dining" className="bg-surface py-32 lg:py-44">
       <div className="mx-auto max-w-[1440px] px-5 lg:px-12">
-        <SceneHead
-          no="06"
-          label="Ẩm thực"
-          title={<>Hương vị của<br /><span className="italic text-[#8c6d46]">những điều tinh tế.</span></>}
-          lede="Từ bình minh trên sundeck đến dạ tiệc 99 ngọn nến — mỗi bữa ăn là một chương."
-        />
-        <Reveal delay={120}>
-          <div className="mt-8 flex flex-wrap gap-2">
-            {TABS.map((t) => (
-              <button
-                key={t.id}
-                onClick={() => setTab(t)}
-                data-cursor="Xem"
-                className={`px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] transition-all duration-300 ${
-                  tab.id === t.id ? "bg-[#161616] text-[#f7f5f0]" : "bg-transparent text-[#444748] hover:bg-black/5"
-                }`}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
-        </Reveal>
+        <h2 className="font-display display-lg max-w-4xl">
+          Hương vị của những điều tinh tế.
+        </h2>
+        <p className="mt-6 max-w-xl text-lg font-light leading-relaxed text-inksoft">
+          Từ bình minh trên sundeck đến dạ tiệc 99 ngọn nến — mỗi bữa ăn là một chương.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-2">
+          {TABS.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t)}
+              className={`whitespace-nowrap px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.2em] transition-[background-color,color] duration-300 ${
+                tab.id === t.id ? "bg-obsidian text-alabaster" : "bg-transparent text-inksoft hover:bg-obsidian/5"
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
         <div className="mt-10 grid grid-cols-1 items-end gap-8 lg:grid-cols-12">
-          <div className="overflow-hidden lg:col-span-8" data-cursor="Thưởng thức">
+          <div className="overflow-hidden lg:col-span-8">
             <Tilt max={3}>
               <div key={tab.id} className="kenburns relative aspect-[16/10] overflow-hidden">
-                <img src={tab.img} alt={tab.title} className="img-grade h-full w-full object-cover transition-transform duration-[2000ms] hover:scale-105" />
+                <img src={tab.img} alt={tab.title} className="img-grade h-full w-full object-cover transition-transform duration-[2000ms] hover:scale-[1.03]" />
                 <div className="grade-warm absolute inset-0" />
               </div>
             </Tilt>
           </div>
           <div key={`t-${tab.id}`} className="kenburns lg:col-span-4">
-            <p className="label-uppercase text-[10px] text-[#8c6d46]">{tab.label}</p>
+            <p className="tnum text-[11px] uppercase tracking-[0.24em] text-bronze">{tab.label}</p>
             <h3 className="font-display mt-2 text-3xl leading-tight">{tab.title}</h3>
-            <p className="mt-3 font-light leading-relaxed text-[#444748]">{tab.desc}</p>
-            <a href="/booking?service=michelin-beach-dinner" className="btn-lux mt-6" data-magnetic data-cursor="Đặt bàn">
-              Đặt bàn
+            <p className="mt-3 font-light leading-relaxed text-inksoft">{tab.desc}</p>
+            <a href="/booking?service=michelin-beach-dinner" className="btn-lux mt-6 whitespace-nowrap">
+              Đặt bàn →
             </a>
           </div>
         </div>
@@ -65,47 +60,41 @@ export function Dining() {
 /** WELLNESS — đổi atmosphere: nền tối, số animate. */
 export function Wellness() {
   return (
-    <section id="wellness" className="grain relative overflow-hidden bg-[#0d1517] py-28 text-[#f7f5f0] lg:py-40">
+    <section id="wellness" className="grain relative overflow-hidden bg-pine py-28 text-alabaster lg:py-40">
       <img
         src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=2000&q=60"
         alt=""
         loading="lazy"
         className="slow-drift absolute inset-0 h-full w-full object-cover opacity-25"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0d1517] via-transparent to-[#0d1517]" />
-      <div className="relative mx-auto max-w-[1100px] px-6 text-center">
-        <Reveal>
-          <p className="font-mono text-[11px] uppercase tracking-[0.4em] text-[#c5a880]">07</p>
-          <p className="label-uppercase mt-3 text-[11px] text-[#fedeb2]">Wellness — chậm lại</p>
-          <h2 className="font-display mx-auto mt-4 max-w-3xl text-5xl leading-[1.1] sm:text-7xl">
-            Hãy để thế giới
-            <br />
-            chờ bạn.
+      <div className="absolute inset-0 bg-gradient-to-b from-pine via-transparent to-pine" />
+      <div className="relative mx-auto max-w-[1100px] px-6">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-end">
+          <h2 className="font-display display-lg lg:col-span-7">
+            Hãy để thế giới chờ bạn.
           </h2>
-          <p className="mx-auto mt-6 max-w-xl font-light text-white/65">
+          <p className="max-w-md font-light leading-[1.9] text-alabaster/65 lg:col-span-5">
             Triết lý chữa lành phương Đông ngàn năm cùng y học tái tạo Thụy Sĩ —
             yoga bình minh, suối khoáng Onsen, dinh dưỡng thải độc.
           </p>
-        </Reveal>
-        <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-3">
+        </div>
+        <div className="tnum mt-14 grid grid-cols-1 gap-10 border-t border-alabaster/15 pt-10 sm:grid-cols-3">
           {[
             { to: 12, label: "phòng trị liệu" },
             { to: 4, label: "nghi thức trị liệu" },
             { to: 1, label: "không gian bên biển" },
           ].map((s) => (
-            <Reveal key={s.label}>
-              <p className="font-display text-7xl text-[#c5a880]">
+            <div key={s.label}>
+              <p className="font-display text-7xl text-champagne">
                 <Counter to={s.to} />
               </p>
-              <p className="label-uppercase mt-2 text-[10px] text-white/60">{s.label}</p>
-            </Reveal>
+              <p className="mt-2 text-[11px] uppercase tracking-[0.24em] text-alabaster/60">{s.label}</p>
+            </div>
           ))}
         </div>
-        <Reveal delay={150}>
-          <a href="/booking?service=spa" className="btn-light mt-12" data-magnetic data-cursor="Thư giãn">
-            Tư vấn liệu trình
-          </a>
-        </Reveal>
+        <a href="/booking?service=spa" className="btn-light mt-12 whitespace-nowrap">
+          Tư vấn liệu trình →
+        </a>
       </div>
     </section>
   );
@@ -115,7 +104,7 @@ export function Wellness() {
 export function SunsetMoment() {
   const { ref, inView } = useInView<HTMLDivElement>(0.35);
   return (
-    <section ref={ref} className="grain-anim relative flex h-[110vh] items-center justify-center overflow-hidden bg-black text-white">
+    <section ref={ref} className="grain relative flex h-[110vh] items-center justify-center overflow-hidden bg-black text-white">
       <img
         src="https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?auto=format&fit=crop&w=2200&q=75"
         alt=""
@@ -140,33 +129,29 @@ export function SunsetMoment() {
         <source src="https://videos.pexels.com/video-files/2169880/2169880-uhd_2560_1440_30fps.mp4" type="video/mp4" />
       </video>
       {/* Ánh hoàng hôn phủ lên sóng biển */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-[#8c4a1f]/45 via-transparent to-[#1f363d]/40" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-ember/45 via-transparent to-seaslate/40" />
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/60" />
-      <GodRays />
-      <Motes count={80} />
       {/* Letterbox khép lại khi cảnh tới */}
       <div
-        className="absolute inset-x-0 top-0 z-10 bg-black transition-all duration-[1600ms]"
-        style={{ height: inView ? "9vh" : "0vh" }}
+        className="absolute inset-x-0 top-0 z-10 h-[9vh] origin-top bg-night transition-transform duration-[1600ms]"
+        style={{ transform: inView ? "scaleY(1)" : "scaleY(0)" }}
       />
       <div
-        className="absolute inset-x-0 bottom-0 z-10 bg-black transition-all duration-[1600ms]"
-        style={{ height: inView ? "9vh" : "0vh" }}
+        className="absolute inset-x-0 bottom-0 z-10 h-[9vh] origin-bottom bg-night transition-transform duration-[1600ms]"
+        style={{ transform: inView ? "scaleY(1)" : "scaleY(0)" }}
       />
-      <div className="relative px-6 text-center">
+      <div className="relative px-6 pb-[9vh] pt-[9vh] text-left lg:px-16">
         <p
-          className="font-mono text-xs uppercase tracking-[0.4em] text-[#fedeb2] transition-all delay-300 duration-1000"
+          className="text-xs uppercase tracking-[0.4em] text-sand transition-opacity delay-300 duration-1000"
           style={{ opacity: inView ? 1 : 0 }}
         >
-          Hoàng hôn / 18:42
+          Hoàng hôn / 18:42 — vịnh cấm
         </p>
         <h2
-          className="font-display mx-auto mt-6 max-w-3xl text-4xl leading-[1.2] transition-all delay-700 duration-[1400ms] sm:text-6xl"
+          className="font-display mt-6 max-w-3xl text-4xl leading-[1.2] transition-[opacity,transform,filter] delay-700 duration-[1400ms] sm:text-6xl"
           style={{ opacity: inView ? 1 : 0, transform: inView ? "none" : "translateY(30px)", filter: inView ? "blur(0)" : "blur(10px)" }}
         >
-          Có những khoảnh khắc
-          <br />
-          không cần được nói thành lời.
+          Có những khoảnh khắc không cần được nói thành lời.
         </h2>
       </div>
     </section>

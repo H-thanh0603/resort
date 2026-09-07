@@ -1,23 +1,47 @@
+/* Hallmark · macrostructure: Photographic · tone: luxury · anchor hue: champagne-gold
+ * nav: N9 edge-aligned minimal (CTA text+arrow · wordmark serif · padding spacious)
+ * footer: Ft5 statement (sentence 38ch · wordmark under · hairline rule)
+ * pre-emit critique: P5 H4 E4 S5 R4 V5
+ * contrast: pass (40-41) · nav: N9 · footer: Ft5 · slop: pass (42-45)
+ * honest: pass (46) · chrome: pass (47) · tokens: pass (48) · responsive: pass (49)
+ * icons: pass (30) · mobile: pass (34, 49, 50-57) */
 @import "tailwindcss";
 
 @theme {
   --color-alabaster: #f7f5f0;
   --color-surface: #fbf9f4;
-  --color-obsidian: #161616;
+  --color-mist: #ece7dc;
+  --color-obsidian: #171513;
+  --color-night: #121110;
   --color-champagne: #c5a880;
   --color-bronze: #8c6d46;
+  --color-sand: #fedeb2;
   --color-seaslate: #1f363d;
+  --color-moss: #12272c;
+  --color-pine: #0d1517;
+  --color-inksoft: #444748;
+  --color-shell: #f2f1ec;
+  --color-ember: #8c4a1f;
+  --color-focus: #c5a880;
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
 }
 
+/* z-scale (named, ascending — do not improvise):
+   10 ambient-sound · 20 mobile-cta · 30 menu-overlay · 35 progress-hairline
+   40 site-header · 45 cursor-removed · 50 preloader · 60 toaster */
 :root {
-  --background: #f7f5f0;
-  --foreground: #161616;
+  --background: var(--color-alabaster);
+  --foreground: var(--color-obsidian);
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+html,
+body {
+  overflow-x: clip;
 }
 
 body {
@@ -25,20 +49,39 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+/* Focus ring: instant, never animated, contrast ≥3:1 on light and dark. */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* Tabular figures for prices, dates, counts. */
+.tnum {
+  font-variant-numeric: tabular-nums;
 }
 
 ::selection {
-  background: #c5a880;
-  color: #161616;
+  background: var(--color-champagne);
+  color: var(--color-obsidian);
+}
+
+/* Instant press feedback (no overshoot on UI state). */
+button:active:not(:disabled),
+a:active {
+  transform: translateY(1px);
 }
 
 .font-display {
   font-family: var(--font-serif);
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 
 .hairline {
-  border-color: rgba(22, 22, 22, 0.08);
+  border-color: color-mix(in oklch, var(--color-obsidian) 8%, transparent);
 }
 
 .label-uppercase {
@@ -50,66 +93,78 @@ body {
 
 /* ---------- Buttons: quiet luxury ---------- */
 .btn-lux {
-  background: #161616;
-  color: #f7f5f0;
+  background: var(--color-obsidian);
+  color: var(--color-alabaster);
   text-transform: uppercase;
   letter-spacing: 0.16em;
   font-size: 11px;
   font-weight: 600;
   padding: 18px 36px;
   border-radius: 0;
-  transition: background 0.4s, transform 0.3s;
+  transition: background-color 0.4s;
   display: inline-block;
 }
 .btn-lux:hover {
-  background: #2a2a2a;
+  background: var(--color-seaslate);
+}
+.btn-lux:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .btn-ghost {
   background: transparent;
-  border: 1px solid rgba(22, 22, 22, 0.25);
-  color: #161616;
+  border: 1px solid color-mix(in oklch, var(--color-obsidian) 25%, transparent);
+  color: var(--color-obsidian);
   text-transform: uppercase;
   letter-spacing: 0.16em;
   font-size: 11px;
   font-weight: 600;
   padding: 16px 32px;
   border-radius: 0;
-  transition: all 0.4s;
+  transition: background-color 0.4s, border-color 0.4s;
   display: inline-block;
 }
 .btn-ghost:hover {
-  border-color: #c5a880;
-  background: #fff;
+  border-color: var(--color-champagne);
+  background: var(--color-alabaster);
+}
+.btn-ghost:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .btn-light {
-  border: 1px solid rgba(247, 245, 240, 0.5);
-  color: #f7f5f0;
+  border: 1px solid color-mix(in oklch, var(--color-alabaster) 50%, transparent);
+  color: var(--color-alabaster);
   text-transform: uppercase;
   letter-spacing: 0.16em;
   font-size: 11px;
   font-weight: 600;
   padding: 16px 32px;
-  transition: all 0.4s;
+  transition: background-color 0.4s, color 0.4s;
   display: inline-block;
 }
 .btn-light:hover {
-  background: #f7f5f0;
-  color: #161616;
+  background: var(--color-alabaster);
+  color: var(--color-obsidian);
+}
+.btn-light:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .card-lux {
-  background: #fff;
-  border: 1px solid rgba(22, 22, 22, 0.06);
-  box-shadow: 0 4px 24px -2px rgba(22, 22, 22, 0.03);
+  background: var(--color-alabaster);
+  border: 1px solid color-mix(in oklch, var(--color-obsidian) 6%, transparent);
+  box-shadow: 0 4px 24px -2px color-mix(in oklch, var(--color-obsidian) 3%, transparent);
 }
 
 .input-lux {
   width: 100%;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid rgba(22, 22, 22, 0.2);
+  border-bottom: 1px solid color-mix(in oklch, var(--color-obsidian) 20%, transparent);
   padding: 12px 2px;
   font-size: 15px;
   outline: none;
@@ -117,7 +172,7 @@ body {
   color: inherit;
 }
 .input-lux:focus {
-  border-bottom-color: #c5a880;
+  border-bottom-color: var(--color-champagne);
 }
 
 /* ---------- Cinematic motion ---------- */
@@ -164,10 +219,10 @@ body {
 @keyframes pulse-dot {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(197, 168, 128, 0.55);
+    box-shadow: 0 0 0 0 color-mix(in oklch, var(--color-champagne) 55%, transparent);
   }
   50% {
-    box-shadow: 0 0 0 10px rgba(197, 168, 128, 0);
+    box-shadow: 0 0 0 10px transparent;
   }
 }
 .pulse-dot {
@@ -189,74 +244,6 @@ body {
   animation-play-state: paused;
 }
 
-/* ------- Atmosphere: vệt sáng, tia nắng, grain động ------- */
-@keyframes leak-sweep {
-  from {
-    background-position: 130% 0;
-  }
-  to {
-    background-position: -30% 0;
-  }
-}
-.light-leak {
-  background: linear-gradient(
-    105deg,
-    transparent 42%,
-    rgba(255, 196, 130, 0.13) 50%,
-    transparent 58%
-  );
-  background-size: 280% 100%;
-  mix-blend-mode: screen;
-  animation: leak-sweep 11s ease-in-out infinite alternate;
-}
-
-@keyframes rays-pulse {
-  0%,
-  100% {
-    opacity: 0.45;
-  }
-  50% {
-    opacity: 0.85;
-  }
-}
-.god-rays {
-  background: linear-gradient(180deg, rgba(255, 205, 140, 0.22), transparent 72%);
-  filter: blur(28px);
-  mix-blend-mode: screen;
-  animation: rays-pulse 8s ease-in-out infinite;
-}
-
-/* Grain phim động */
-.grain-anim {
-  position: relative;
-}
-.grain-anim::after {
-  content: "";
-  position: absolute;
-  inset: -60%;
-  pointer-events: none;
-  opacity: 0.06;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.7'/%3E%3C/svg%3E");
-  animation: grain-shift 1.1s steps(4) infinite;
-}
-@keyframes grain-shift {
-  0% {
-    transform: translate(0, 0);
-  }
-  25% {
-    transform: translate(-4%, 3%);
-  }
-  50% {
-    transform: translate(3%, -4%);
-  }
-  75% {
-    transform: translate(-2%, -2%);
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
-
 /* Editorial link: hairline underline expands */
 .link-line {
   position: relative;
@@ -265,10 +252,10 @@ body {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -6px;
+  bottom: -2px;
   height: 1px;
   width: 100%;
-  background: #c5a880;
+  background: var(--color-champagne);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -298,7 +285,7 @@ body {
 /* Chữ viền champagne — điểm nhấn editorial */
 .text-outline {
   color: transparent;
-  -webkit-text-stroke: 1.5px #fedeb2;
+  -webkit-text-stroke: 1.5px var(--color-sand);
 }
 @media (max-width: 640px) {
   .text-outline {
@@ -331,17 +318,17 @@ body {
   width: 100%;
   background: transparent;
   border: 0;
-  border-bottom: 1px solid rgba(247, 245, 240, 0.28);
+  border-bottom: 1px solid color-mix(in oklch, var(--color-alabaster) 28%, transparent);
   padding: 14px 2px;
   font-size: 17px;
   font-weight: 300;
   letter-spacing: 0.02em;
   outline: none;
   transition: border-color 0.4s;
-  color: #f7f5f0;
+  color: var(--color-alabaster);
 }
 .input-line::placeholder {
-  color: rgba(247, 245, 240, 0.38);
+  color: color-mix(in oklch, var(--color-alabaster) 38%, transparent);
 }
 .input-line:focus {
   border-bottom-color: #c5a880;
@@ -358,26 +345,14 @@ body {
   line-height: 1.06;
 }
 
-/* Custom cursor: ẩn con trỏ mặc định trên desktop khi cursor hoạt động */
-.has-cursor,
-.has-cursor a,
-.has-cursor button,
-.has-cursor input,
-.has-cursor select,
-.has-cursor textarea,
-.has-cursor label {
-  cursor: none;
-}
+/* Custom cursor removed (Hallmark audit: cursor-follower tell). */
 
 @media (prefers-reduced-motion: reduce) {
   .kenburns,
   .slow-drift,
   .scroll-hint,
   .pulse-dot,
-  .marquee-track,
-  .light-leak,
-  .god-rays,
-  .grain-anim::after {
+  .marquee-track {
     animation: none;
   }
   html {

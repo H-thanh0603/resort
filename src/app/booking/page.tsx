@@ -44,8 +44,6 @@ function BookingInner() {
       if (!r.ok) throw new Error(j.error ?? "Lỗi tìm phòng");
       setItems(j.items);
       if (j.items.length && !selected) setSelected(j.items[0].slug);
-      const n = j.items.filter((x: Item) => x.available).length;
-      toast.success(`Tìm thấy ${n} loại biệt thự còn phòng`);
     } catch (e) { const m = (e as Error).message; setError(m); toast.error(m); }
     finally { setLoading(false); }
   }
@@ -63,7 +61,6 @@ function BookingInner() {
       const j = await r.json();
       if (!r.ok) throw new Error(j.error ?? "Đặt phòng thất bại");
       setResult(j);
-      toast.success(`Đã giữ chỗ ${j.code} — còn 15 phút thanh toán`);
     } catch (e) { const m = (e as Error).message; setError(m); toast.error(m); }
   }
 
@@ -71,7 +68,7 @@ function BookingInner() {
 
   return (
     <div className="max-w-[1200px] mx-auto px-5 py-14">
-      <p className="label-uppercase text-[11px] text-[#8c6d46]">Đặt kỳ nghỉ</p>
+      <p className="label-uppercase text-[11px] text-bronze">Đặt kỳ nghỉ</p>
       <h1 className="font-display text-5xl mt-2">Tìm phòng trống &amp; giữ chỗ</h1>
 
       <div className="card-lux p-6 mt-8 grid grid-cols-1 sm:grid-cols-5 gap-4 items-end">
@@ -81,28 +78,28 @@ function BookingInner() {
         <label className="block"><span className="label-uppercase text-[10px]">Mã ưu đãi</span><input value={form.promoCode} onChange={(e) => setForm({ ...form, promoCode: e.target.value })} className="input-lux uppercase" /></label>
         <button onClick={search} className="btn-lux rounded-lg">{loading ? "Đang tìm..." : "Tìm phòng"}</button>
       </div>
-      {error && <p className="mt-4 text-sm text-red-700 bg-red-50 border border-red-200 p-3">{error}</p>}
+      <div className="mt-4 min-h-[24px]">{error ? <p className="border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</p> : null}</div>
 
       {items.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
           <div className="lg:col-span-2 space-y-4">
             {items.map((i) => (
-              <label key={i.slug} className={`card-lux p-5 flex items-center justify-between gap-4 cursor-pointer ${selected === i.slug ? "ring-2 ring-[#c5a880]" : ""} ${!i.available ? "opacity-50" : ""}`}>
+              <label key={i.slug} className={`card-lux p-5 flex items-center justify-between gap-4 cursor-pointer ${selected === i.slug ? "ring-2 ring-champagne" : ""} ${!i.available ? "opacity-50" : ""}`}>
                 <span className="flex items-center gap-3">
                   <input type="radio" checked={selected === i.slug} onChange={() => setSelected(i.slug)} disabled={!i.available} />
                   <span>
                     <b>{i.name}</b>
-                    <span className="block text-xs text-[#444748]">{i.nights} đêm • {vnd(i.pricePerNight)}/đêm</span>
+                    <span className="tnum block text-xs text-inksoft">{i.nights} đêm • {vnd(i.pricePerNight)}/đêm</span>
                     {i.available && i.availableUnits <= 2 ? (
-                      <span className="mt-1 inline-block bg-[#c5a880]/15 px-2 py-0.5 text-[11px] font-semibold text-[#8c6d46]">
+                      <span className="mt-1 inline-block bg-champagne/15 px-2 py-0.5 text-[11px] font-semibold text-bronze">
                         ✦ Chỉ còn {i.availableUnits} căn — giữ ngay
                       </span>
                     ) : (
-                      <span className="block text-xs text-[#444748]">Còn {i.availableUnits} căn</span>
+                      <span className="block text-xs text-inksoft">Còn {i.availableUnits} căn</span>
                     )}
                   </span>
                 </span>
-                <b>{vnd(i.total)}</b>
+                <b className="tnum">{vnd(i.total)}</b>
               </label>
             ))}
             <div className="card-lux p-5">
@@ -110,7 +107,7 @@ function BookingInner() {
               {SERVICES.map((s) => (
                 <label key={s.slug} className="flex items-center justify-between py-2 border-t hairline text-sm">
                   <span className="flex items-center gap-2"><input type="checkbox" checked={services.includes(s.slug)} onChange={() => setServices(services.includes(s.slug) ? services.filter((x) => x !== s.slug) : [...services, s.slug])} />{s.name}</span>
-                  <b>{vnd(s.price)}</b>
+                  <b className="tnum">{vnd(s.price)}</b>
                 </label>
               ))}
             </div>
@@ -120,38 +117,38 @@ function BookingInner() {
             <input placeholder="Họ tên *" value={form.guestName} onChange={(e) => setForm({ ...form, guestName: e.target.value })} className="input-lux" />
             <input placeholder="Điện thoại *" value={form.guestPhone} onChange={(e) => setForm({ ...form, guestPhone: e.target.value })} className="input-lux" />
             <input placeholder="Email *" value={form.guestEmail} onChange={(e) => setForm({ ...form, guestEmail: e.target.value })} className="input-lux" />
-            <button onClick={submit} disabled={!selected} className="btn-lux rounded-lg w-full">Giữ chỗ 15 phút — {chosen ? vnd(chosen.total) : ""}</button>
-            <p className="text-xs text-[#444748]">Cọc 30% để xác nhận. Hủy linh hoạt đến 48h trước nhận phòng.</p>
+            <button onClick={submit} disabled={!selected} className="btn-lux rounded-lg w-full whitespace-nowrap disabled:cursor-not-allowed disabled:opacity-40">Giữ chỗ 15 phút — {chosen ? vnd(chosen.total) : ""}</button>
+            <p className="text-xs text-inksoft">Cọc 30% để xác nhận. Hủy linh hoạt đến 48h trước nhận phòng.</p>
           </div>
         </div>
       )}
 
       {result && (
-        <div className="grain relative mt-8 overflow-hidden bg-[#101010] p-8 text-white sm:p-12">
-          <p className="label-uppercase text-center text-[10px] tracking-[0.34em] text-[#c5a880]">✦ &nbsp;Giữ chỗ thành công&nbsp; ✦</p>
+        <div className="grain relative mt-8 overflow-hidden bg-night p-8 text-white sm:p-12">
+          <p className="label-uppercase text-center text-[10px] tracking-[0.34em] text-champagne">✦ &nbsp;Giữ chỗ thành công&nbsp; ✦</p>
           <h2 className="font-display mt-4 text-center text-4xl sm:text-5xl">
-            Kỳ nghỉ của bạn<br /><span className="italic text-[#fedeb2]">đã được giữ chỗ.</span>
+            Kỳ nghỉ của bạn<br /><span className="text-sand">đã được giữ chỗ.</span>
           </h2>
-          <p className="mt-4 text-center font-mono text-sm tracking-[0.2em] text-white/70">
-            Mã giữ chỗ: <b className="text-[#fedeb2]">{result.code}</b>
+          <p className="mt-4 text-center text-sm tracking-[0.2em] text-alabaster/70">
+            Mã giữ chỗ: <b className="text-sand">{result.code}</b>
           </p>
           {/* QR check-in — quét tại quầy lễ tân */}
-          <div className="mx-auto mt-6 flex w-fit items-center gap-5 border border-white/12 bg-white/[0.04] p-5">
+          <div className="mx-auto mt-6 flex w-fit items-center gap-5 border border-alabaster/12 bg-alabaster/[0.04] p-5">
             <QRCodeSVG value={result.code} size={112} bgColor="transparent" fgColor="#f7f5f0" />
-            <p className="max-w-[180px] text-left text-xs leading-relaxed text-white/60">
+            <p className="max-w-[180px] text-left text-xs leading-relaxed text-alabaster/60">
               QR check-in của bạn.<br />Chụp màn hình &amp; xuất trình tại quầy lễ tân.
             </p>
           </div>
-          <div className="mx-auto mt-6 grid max-w-lg grid-cols-2 gap-4 border-y border-white/12 py-5 text-center">
-            <div><p className="label-uppercase text-[10px] text-white/50">Tổng kỳ nghỉ</p><p className="font-display mt-1 text-2xl">{vnd(result.total)}</p></div>
-            <div><p className="label-uppercase text-[10px] text-white/50">Cọc 30% để xác nhận</p><p className="font-display mt-1 text-2xl text-[#fedeb2]">{vnd(result.deposit)}</p></div>
+          <div className="mx-auto mt-6 grid max-w-lg grid-cols-2 gap-4 border-y border-alabaster/12 py-5 text-center">
+            <div><p className="label-uppercase text-[10px] text-alabaster/50">Tổng kỳ nghỉ</p><p className="tnum font-display mt-1 text-2xl">{vnd(result.total)}</p></div>
+            <div><p className="label-uppercase text-[10px] text-alabaster/50">Cọc 30% để xác nhận</p><p className="tnum font-display mt-1 text-2xl text-sand">{vnd(result.deposit)}</p></div>
           </div>
-          <p className="mt-5 text-center text-sm font-light text-white/65">
+          <p className="mt-5 text-center text-sm font-light text-alabaster/65">
             Quản gia trưởng sẽ liên hệ trong 12 giờ để sắp xếp đón tiễn, thực đơn và liệu trình.
           </p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
-            <a href={`/checkout?code=${result.code}`} data-cursor="Thanh toán" className="bg-[#c5a880] px-8 py-4 text-xs font-semibold uppercase tracking-widest text-black transition hover:bg-[#fedeb2]">Thanh toán ngay →</a>
-            <button onClick={() => setResult(null)} className="border border-white/30 px-8 py-4 text-xs uppercase tracking-widest transition hover:border-white/70">Đặt thêm</button>
+            <a href={`/checkout?code=${result.code}`} className="bg-champagne px-8 py-4 text-xs font-semibold uppercase tracking-widest text-black transition hover:bg-sand">Thanh toán ngay →</a>
+            <button onClick={() => setResult(null)} className="border border-alabaster/30 px-8 py-4 text-xs uppercase tracking-widest transition hover:border-alabaster/70">Đặt thêm</button>
           </div>
         </div>
       )}

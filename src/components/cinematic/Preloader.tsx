@@ -41,20 +41,20 @@ export default function Preloader() {
   if (gone) return null;
   return (
     <div
-      className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#101010] text-[#f7f5f0] transition-transform duration-[900ms]"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-night text-alabaster transition-transform duration-[900ms]"
       style={{
         transform: done ? "translateY(-100%)" : "none",
         transitionTimingFunction: "cubic-bezier(0.76,0,0.24,1)",
       }}
     >
-      <p className="label-uppercase text-[10px] tracking-[0.4em] text-[#c5a880]">Sanctuary &amp; Retreats</p>
+      <p className="label-uppercase text-[10px] tracking-[0.4em] text-champagne">Sanctuary &amp; Retreats</p>
       <h1 key={word} className="kenburns font-display mt-3 text-6xl tracking-[0.08em] sm:text-8xl">
         {word === "Aura" ? "AURA" : word}
       </h1>
-      <div className="mt-8 h-px w-56 bg-white/15">
-        <div className="h-full bg-[#c5a880] transition-[width]" style={{ width: `${count}%` }} />
+      <div className="mt-8 h-px w-56 bg-alabaster/15">
+        <div className="h-full origin-left bg-champagne" style={{ transform: `scaleX(${count / 100})` }} />
       </div>
-      <p className="mt-4 font-mono text-xs tracking-[0.3em] text-white/50">{count}%</p>
+      <p className="mt-4 text-xs tracking-[0.3em] text-alabaster/50">{count}%</p>
     </div>
   );
 }

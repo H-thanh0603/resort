@@ -36,7 +36,7 @@ export default function AdminCharts({ items }: { items: B[] }) {
   return (
     <div className="mt-8 grid grid-cols-1 gap-4 lg:grid-cols-2">
       <div className="card-lux p-6">
-        <p className="label-uppercase text-[10px] text-[#8c6d46]">Booking theo trạng thái</p>
+        <p className="label-uppercase text-[10px] text-bronze">Booking theo trạng thái</p>
         <div className="mt-4 h-64">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={byStatus}>
@@ -50,7 +50,7 @@ export default function AdminCharts({ items }: { items: B[] }) {
         </div>
       </div>
       <div className="card-lux p-6">
-        <p className="label-uppercase text-[10px] text-[#8c6d46]">Doanh thu xác nhận (triệu ₫)</p>
+        <p className="label-uppercase text-[10px] text-bronze">Doanh thu xác nhận (triệu ₫)</p>
         <div className="mt-4 h-64">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={byDay}>

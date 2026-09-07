@@ -7,7 +7,7 @@ export default async function VillaDetail({ params }: { params: Promise<{ slug: 
   if (!villa) return notFound();
   return (
     <div className="max-w-[1440px] mx-auto px-5 lg:px-12 py-16">
-      <p className="label-uppercase text-[11px] text-[#8c6d46]">{villa.category}</p>
+      <p className="label-uppercase text-[11px] text-bronze">{villa.category}</p>
       <h1 className="font-display text-5xl mt-2">{villa.name}</h1>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-8">
         <img src={villa.image} alt={villa.name} className="w-full aspect-[16/11] object-cover" />

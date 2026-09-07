@@ -22,30 +22,30 @@ export function SceneHead({ no, label, title, lede, meta, light = false, classNa
     <div className={className}>
       <Reveal>
         <div className="flex items-center gap-4">
-          <span className="font-mono text-[11px] uppercase tracking-[0.4em] text-[#c5a880]">{no}</span>
-          <span className={`h-px w-16 ${light ? "bg-white/25" : "bg-black/25"}`} />
+          <span className="text-[11px] uppercase tracking-[0.4em] text-champagne">{no}</span>
+          <span className={`h-px w-16 ${light ? "bg-alabaster/25" : "bg-obsidian/25"}`} />
           <span
-            className={`label-uppercase text-[11px] ${light ? "text-white/60" : "text-[#8c6d46]"}`}
+            className={`label-uppercase text-[11px] ${light ? "text-alabaster/60" : "text-bronze"}`}
           >
             {label}
           </span>
         </div>
       </Reveal>
       <Reveal delay={90}>
-        <h2 className={`font-display display-lg mt-6 max-w-4xl ${light ? "text-[#f7f5f0]" : "text-[#161616]"}`}>
+        <h2 className={`font-display display-lg mt-6 max-w-4xl ${light ? "text-alabaster" : "text-obsidian"}`}>
           {title}
         </h2>
       </Reveal>
       {lede && (
         <Reveal delay={160}>
-          <p className={`mt-6 max-w-xl text-lg font-light leading-relaxed ${light ? "text-white/65" : "text-[#444748]"}`}>
+          <p className={`mt-6 max-w-xl text-lg font-light leading-relaxed ${light ? "text-alabaster/65" : "text-inksoft"}`}>
             {lede}
           </p>
         </Reveal>
       )}
       {meta && meta.length > 0 && (
         <Reveal delay={220}>
-          <div className={`mt-8 flex flex-wrap gap-x-10 gap-y-2 border-t pt-5 font-mono text-[11px] uppercase tracking-[0.24em] ${light ? "border-white/15 text-white/45" : "hairline text-black/45"}`}>
+          <div className={`mt-8 flex flex-wrap gap-x-10 gap-y-2 border-t pt-5 text-[11px] uppercase tracking-[0.24em] ${light ? "border-alabaster/15 text-alabaster/45" : "hairline text-obsidian/45"}`}>
             {meta.map((m) => (
               <span key={m}>{m}</span>
             ))}

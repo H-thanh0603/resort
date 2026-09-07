@@ -20,7 +20,7 @@ export default function LoginPage() {
 
   return (
     <div className="max-w-md mx-auto px-5 py-16">
-      <p className="label-uppercase text-[11px] text-[#8c6d46]">Aura Club</p>
+      <p className="label-uppercase text-[11px] text-bronze">Aura Club</p>
       <h1 className="font-display text-4xl mt-2">{mode === "login" ? "Đăng nhập" : "Tạo tài khoản"}</h1>
       <div className="card-lux p-8 mt-6 space-y-4">
         {mode === "register" && (
@@ -36,7 +36,7 @@ export default function LoginPage() {
         <button onClick={() => setMode(mode === "login" ? "register" : "login")} className="text-sm underline">
           {mode === "login" ? "Chưa có tài khoản? Đăng ký" : "Đã có tài khoản? Đăng nhập"}
         </button>
-        <p className="text-xs text-[#444748]">Seed admin: admin@aura.resort / Aura@123</p>
+        <p className="text-xs text-inksoft">Seed admin: admin@aura.resort / Aura@123</p>
       </div>
     </div>
   );

@@ -1,8 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { VILLAS, vnd } from "@/lib/site";
-import { Reveal } from "./Reveal";
-import { SceneHead } from "./Editorial";
 
 type Moment = { slug: string; name: string; price: number; note: string };
 
@@ -62,27 +60,29 @@ export default function EscapeBuilder() {
   const link = `/booking?villa=${villa}&services=${moments.join(",")}`;
 
   return (
-    <section id="atelier" className="bg-[#fbf9f4] py-32 lg:py-48">
+    <section id="atelier" className="bg-surface py-28 lg:py-40">
       <div className="mx-auto max-w-[1440px] px-5 lg:px-12">
-        <SceneHead
-          no="08"
-          label="Escape builder"
-          title={<>Tự tay composing<br /><span className="italic text-[#8c6d46]">kỳ nghỉ của bạn.</span></>}
-          lede="Ba bước. Giá minh bạch theo thời gian thực. Không tài khoản, không chờ đợi — hành trình thuộc về bạn ngay khi chạm."
-          meta={["Giá thật", "Lưu tự động", "Đặt một chạm"]}
-        />
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-end">
+          <h2 className="font-display display-lg max-w-3xl lg:col-span-7">
+            Tự tay composing kỳ nghỉ của bạn.
+          </h2>
+          <p className="max-w-md font-light leading-[1.9] text-inksoft lg:col-span-5">
+            Ba bước. Giá minh bạch theo thời gian thực. Không tài khoản, không chờ đợi.
+          </p>
+        </div>
+        <p className="tnum mt-8 flex flex-wrap gap-x-10 gap-y-2 border-t hairline pt-5 text-[11px] uppercase tracking-[0.24em] text-obsidian/45">
+          <span>Giá thật</span><span>Lưu tự động</span><span>Đặt một chạm</span>
+        </p>
         {resumed && (
-          <Reveal delay={100}>
-            <p className="mt-6 inline-block border border-[#c5a880]/50 bg-[#c5a880]/10 px-4 py-2 text-xs tracking-wide text-[#8c6d46]">
-              ✦ Đã khôi phục hành trình bạn đang composing dở — tiếp tục nhé.
-            </p>
-          </Reveal>
+          <p className="mt-6 inline-block border border-champagne/50 bg-champagne/10 px-4 py-2 text-xs tracking-wide text-obsidian">
+            Đã khôi phục hành trình bạn đang composing dở — tiếp tục nhé.
+          </p>
         )}
 
         <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div className="lg:col-span-7">
             {/* Bước 01 — Villa */}
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#8c6d46]">01 — Chọn nơi ở</p>
+            <p className="text-[11px] uppercase tracking-[0.3em] text-bronze">01 — Chọn nơi ở</p>
             <ul className="mt-4">
               {VILLAS.map((x) => {
                 const on = x.slug === villa;
@@ -90,20 +90,20 @@ export default function EscapeBuilder() {
                   <li key={x.slug} className="border-t hairline last:border-b">
                     <button
                       onClick={() => setVilla(x.slug)}
-                      data-cursor={on ? "Đã chọn" : "Chọn"}
-                      className="flex w-full items-center gap-5 py-4 text-left transition-all"
-                      style={{ paddingLeft: on ? 8 : 0 }}
+                     
+                      className="flex w-full items-center gap-5 py-4 text-left transition-transform duration-300"
+                      style={{ transform: on ? "translateX(8px)" : "none" }}
                     >
                       <img src={x.image} alt="" loading="lazy" className="img-grade h-16 w-24 shrink-0 object-cover" />
                       <span className="flex-1">
-                        <span className={`font-display block text-2xl transition-colors ${on ? "" : "text-black/45"}`}>{x.name}</span>
-                        <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-black/45">
+                        <span className={`font-display block text-2xl transition-colors ${on ? "" : "text-obsidian/45"}`}>{x.name}</span>
+                        <span className="tnum text-[11px] uppercase tracking-[0.2em] text-obsidian/45">
                           {x.area}m² • {vnd(x.price)}/đêm
                         </span>
                       </span>
                       <span
-                        className={`flex h-6 w-6 items-center justify-center rounded-full border text-sm transition-all ${
-                          on ? "border-[#8c6d46] bg-[#161616] text-[#fedeb2]" : "border-black/25 text-transparent"
+                        className={`flex h-6 w-6 items-center justify-center rounded-full border text-sm transition-[background-color,color,border-color] duration-300 ${
+                          on ? "border-bronze bg-obsidian text-sand" : "border-obsidian/25 text-transparent"
                         }`}
                       >
                         ✓
@@ -115,8 +115,8 @@ export default function EscapeBuilder() {
             </ul>
 
             {/* Bước 02 — Khoảnh khắc */}
-            <p className="mt-12 font-mono text-[11px] uppercase tracking-[0.3em] text-[#8c6d46]">
-              02 — Chọn khoảnh khắc <span className="text-black/40">(nhiều lựa chọn)</span>
+            <p className="mt-12 text-[11px] uppercase tracking-[0.3em] text-bronze">
+              02 — Chọn khoảnh khắc <span className="text-obsidian/40">(nhiều lựa chọn)</span>
             </p>
             <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {MOMENTS.map((m) => {
@@ -125,14 +125,14 @@ export default function EscapeBuilder() {
                   <button
                     key={m.slug}
                     onClick={() => toggle(m.slug)}
-                    data-cursor={on ? "Bỏ chọn" : "Thêm"}
-                    className={`border p-5 text-left transition-all duration-300 ${
-                      on ? "border-[#161616] bg-[#161616] text-[#f7f5f0]" : "hairline border bg-white/60 hover:border-[#8c6d46]"
+                   
+                    className={`border p-5 text-left transition-[background-color,color,border-color] duration-300 ${
+                      on ? "border-obsidian bg-obsidian text-alabaster" : "hairline border bg-alabaster/60 hover:border-bronze"
                     }`}
                   >
                     <span className="font-display block text-xl">{m.name}</span>
-                    <span className={`mt-1 block text-xs ${on ? "text-white/60" : "text-black/50"}`}>{m.note}</span>
-                    <span className={`mt-3 block font-mono text-xs tracking-wider ${on ? "text-[#fedeb2]" : "text-[#8c6d46]"}`}>
+                    <span className={`mt-1 block text-xs ${on ? "text-alabaster/60" : "text-obsidian/50"}`}>{m.note}</span>
+                    <span className={`mt-3 block text-xs tracking-wider ${on ? "text-sand" : "text-bronze"}`}>
                       {m.price === 0 ? "Miễn phí" : `+ ${vnd(m.price)}`}
                     </span>
                   </button>
@@ -142,14 +142,14 @@ export default function EscapeBuilder() {
 
             {/* Số đêm */}
             <div className="mt-10 flex items-center gap-6">
-              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-[#8c6d46]">03 — Số đêm</p>
+              <p className="text-[11px] uppercase tracking-[0.3em] text-bronze">03 — Số đêm</p>
               <div className="flex items-center gap-4">
                 {[2, 3, 5, 7].map((d) => (
                   <button
                     key={d}
                     onClick={() => setNights(d)}
-                    className={`h-12 w-12 rounded-full border text-sm transition-all ${
-                      nights === d ? "border-[#161616] bg-[#161616] text-white" : "hairline border text-black/60 hover:border-[#8c6d46]"
+                    className={`h-12 w-12 rounded-full border text-sm transition-[background-color,color,border-color] duration-300 ${
+                      nights === d ? "border-obsidian bg-obsidian text-white" : "hairline border text-obsidian/60 hover:border-bronze"
                     }`}
                   >
                     {d}
@@ -161,26 +161,26 @@ export default function EscapeBuilder() {
 
           {/* Tổng kết sticky — Peak: con số + CTA */}
           <div className="lg:col-span-5">
-            <div className="bg-[#101010] p-8 text-[#f7f5f0] lg:sticky lg:top-28" data-cursor="Hành trình">
-              <p className="label-uppercase text-[10px] text-[#c5a880]">Hành trình của bạn</p>
+            <div className="bg-night p-8 text-alabaster lg:sticky lg:top-28">
+              <p className="label-uppercase text-[10px] text-champagne">Hành trình của bạn</p>
               <h3 className="font-display mt-3 text-3xl leading-tight">{v.name}</h3>
-              <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-white/50">
+              <p className="mt-1 text-[11px] uppercase tracking-[0.2em] text-alabaster/50">
                 {nights} đêm • {moments.length} khoảnh khắc
               </p>
-              <ul className="mt-6 space-y-3 border-t border-white/12 pt-5 text-sm">
-                <li className="flex justify-between"><span className="text-white/65">Lưu trú {nights} đêm</span><span>{vnd(stayTotal)}</span></li>
+              <ul className="tnum mt-6 space-y-3 border-t border-alabaster/12 pt-5 text-sm">
+                <li className="flex justify-between"><span className="text-alabaster/65">Lưu trú {nights} đêm</span><span>{vnd(stayTotal)}</span></li>
                 {picked.map((m) => (
-                  <li key={m.slug} className="flex justify-between"><span className="text-white/65">{m.name}</span><span>{vnd(m.price)}</span></li>
+                  <li key={m.slug} className="flex justify-between"><span className="text-alabaster/65">{m.name}</span><span>{vnd(m.price)}</span></li>
                 ))}
               </ul>
-              <div className="mt-6 flex items-baseline justify-between border-t border-white/12 pt-5">
-                <span className="label-uppercase text-[10px] text-white/55">Tổng • cọc 30%</span>
-                <span className="font-display text-4xl text-[#fedeb2]">{vnd(total)}</span>
+              <div className="mt-6 flex items-baseline justify-between border-t border-alabaster/12 pt-5">
+                <span className="label-uppercase text-[10px] text-alabaster/55">Tổng • cọc 30%</span>
+                <span className="tnum font-display text-4xl text-sand">{vnd(total)}</span>
               </div>
-              <a href={link} data-magnetic data-cursor="Đặt ngay" className="btn-lux mt-7 w-full !bg-[#f7f5f0] !text-center !text-[#161616] hover:!bg-white">
+              <a href={link} className="btn-lux mt-7 w-full whitespace-nowrap !bg-alabaster !text-center !text-obsidian hover:!bg-white">
                 Đặt hành trình này →
               </a>
-              <p className="mt-4 text-center font-mono text-[10px] uppercase tracking-[0.22em] text-white/40">
+              <p className="mt-4 text-center text-[10px] uppercase tracking-[0.22em] text-alabaster/40">
                 Hủy linh hoạt 48h • Không cần tài khoản
               </p>
             </div>

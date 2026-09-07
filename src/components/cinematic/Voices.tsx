@@ -1,52 +1,53 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Reveal } from "./Reveal";
 
-const QUOTES = [
-  { q: "Thời gian như ngừng trôi. Từng chi tiết gỗ, từng cái cúi đầu của quản gia — hoàn toàn chinh phục tôi.", n: "Gia đình Hoàng Nam", r: "Hội viên Black • 6 lần lưu trú" },
-  { q: "Hoàng hôn từ hồ vô cực nghẹt thở. Món ăn như tác phẩm mỹ thuật sống.", n: "Elena Rostova", r: "Condé Nast Traveller UK" },
-  { q: "Tiệc cưới của chúng tôi giống giấc mơ cổ tích ngoài đời thực.", n: "Minh Triết & Thu An", r: "Cưới riêng tư • 12/2024" },
+const NOTES = [
+  { t: "Buổi sáng không báo thức.", d: "Tiếng sóng thay chuông. Ăn sáng trên sundeck gỗ teak, chân trần." },
+  { t: "Hoàng hôn đúng 18:42.", d: "Hồ vô cực chuyển màu đồng. Không ai nói gì trong mười phút." },
+  { t: "Đêm đầu ngủ một mạch.", d: "Sen tuyết, đá bazan ấm, và sự im lặng tuyệt đối của vịnh cấm." },
 ];
 
-/** VOICES — lời chứng điện ảnh: quote khổng lồ tự xoay, nền xanh rừng sâu. */
+/**
+ * FIELD NOTES — ghi chép của nhà, không testimonial bịa đặt.
+ * Ba mẩu quan sát xoay chậm, tạm dừng khi hover/focus.
+ */
 export default function Voices() {
   const [idx, setIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
   useEffect(() => {
-    const t = setInterval(() => setIdx((i) => (i + 1) % QUOTES.length), 6000);
+    if (paused) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const t = setInterval(() => setIdx((i) => (i + 1) % NOTES.length), 7000);
     return () => clearInterval(t);
-  }, []);
-  const cur = QUOTES[idx];
+  }, [paused]);
+  const cur = NOTES[idx];
 
   return (
-    <section className="grain relative overflow-hidden bg-[#12272c] py-28 text-[#f7f5f0] lg:py-40">
-      <span className="font-display pointer-events-none absolute -top-10 left-4 select-none text-[34vw] leading-none text-white/[0.04] lg:text-[22vw]">
-        ”
-      </span>
-      <div className="relative mx-auto max-w-4xl px-6 text-center">
-        <Reveal>
-          <p className="label-uppercase text-[11px] text-[#fedeb2]">Lời khen quốc tế</p>
-          <p className="mt-6 text-[#c5a880] tracking-[0.4em]">★★★★★</p>
-        </Reveal>
-        <div key={idx} className="kenburns mt-8 min-h-[220px] sm:min-h-[190px]">
-          <blockquote className="font-display text-2xl italic leading-[1.4] sm:text-4xl">
-            “{cur.q}”
-          </blockquote>
-          <p className="mt-8 text-sm font-semibold">{cur.n}</p>
-          <p className="label-uppercase mt-2 text-[10px] text-white/50">{cur.r}</p>
+    <section
+      className="grain relative overflow-hidden bg-moss py-28 text-alabaster lg:py-36"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
+      <div className="relative mx-auto max-w-4xl px-6">
+        <p className="text-[11px] uppercase tracking-[0.3em] text-champagne">Sổ tay khu nghỉ</p>
+        <div key={idx} className="mt-8 min-h-[190px] sm:min-h-[160px]">
+          <h2 className="font-display text-3xl leading-[1.25] sm:text-5xl">
+            {cur.t}
+          </h2>
+          <p className="mt-5 max-w-xl font-light leading-relaxed text-alabaster/65">{cur.d}</p>
         </div>
-        <div className="mt-10 flex items-center justify-center gap-3">
-          {QUOTES.map((_, i) => (
+        <div className="mt-10 flex items-center gap-3">
+          {NOTES.map((_, i) => (
             <button
               key={i}
               onClick={() => setIdx(i)}
-              aria-label={`Quote ${i + 1}`}
-              className={`h-1 transition-all duration-500 ${i === idx ? "w-12 bg-[#c5a880]" : "w-6 bg-white/25 hover:bg-white/50"}`}
+              aria-label={`Ghi chép ${i + 1}`}
+              className={`h-1 transition-[width,background-color] duration-500 ${i === idx ? "w-12 bg-champagne" : "w-6 bg-alabaster/25 hover:bg-alabaster/50"}`}
             />
           ))}
         </div>
-        <p className="mt-12 font-mono text-[11px] uppercase tracking-[0.3em] text-white/35">
-          Forbes ★★★★★ — Condé Nast Gold List 2024 — Michelin Keys
-        </p>
       </div>
     </section>
   );

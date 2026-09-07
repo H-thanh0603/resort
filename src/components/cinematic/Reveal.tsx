@@ -108,11 +108,11 @@ export function SceneTag({
 }) {
   return (
     <div className={`flex items-center gap-4 ${className}`}>
-      <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-[#c5a880]">{no}</span>
-      <span className={`h-px w-14 ${light ? "bg-white/30" : "bg-black/25"}`} />
+      <span className="text-[10px] uppercase tracking-[0.4em] text-champagne">{no}</span>
+      <span className={`h-px w-14 ${light ? "bg-alabaster/30" : "bg-obsidian/25"}`} />
       <span
         className={`text-[10px] font-semibold uppercase tracking-[0.4em] ${
-          light ? "text-white/60" : "text-black/50"
+          light ? "text-alabaster/60" : "text-obsidian/50"
         }`}
       >
         {title}

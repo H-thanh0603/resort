@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import SiteNav from "@/components/cinematic/SiteNav";
-import Cursor from "@/components/cinematic/Cursor";
 import SmoothScroll from "@/components/cinematic/SmoothScroll";
 import AmbientSound from "@/components/cinematic/AmbientSound";
 import { Toaster } from "sonner";
@@ -12,46 +11,34 @@ export const metadata: Metadata = {
     "Digital Luxury Journey: biệt thự hồ bơi vô cực, ẩm thực Michelin, spa sen, quản gia riêng 24/7 tại Phú Quốc.",
 };
 
+/**
+ * Ft5 statement meta — câu closing nằm ở trang; footer chỉ giữ
+ * wordmark, ba link, newsletter gọn và một dòng colophon.
+ */
 function Footer() {
   return (
-    <footer className="bg-[#161616] text-[#f2f1ec]">
-      <div className="mx-auto max-w-[1440px] px-5 py-16 lg:px-12">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
+    <footer className="bg-night text-shell">
+      <div className="mx-auto max-w-[1440px] px-5 lg:px-12">
+        <div className="flex flex-col gap-8 border-t border-alabaster/15 py-12 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="font-display text-xl uppercase">Aura Resorts</p>
-            <p className="mt-3 text-sm leading-relaxed text-white/60">
-              Bãi Khem, Phú Quốc — vịnh biển biệt lập, rừng bảo tồn 120ha, 3km bờ san hô.
+            <p className="font-display text-2xl uppercase tracking-[0.1em]">Aura</p>
+            <p className="mt-2 text-[11px] uppercase tracking-[0.22em] text-alabaster/45">
+              Bãi Khem, Phú Quốc — 10.0245°N, 104.0322°E
             </p>
-            <p className="mt-4 text-xs text-white/40">GPS 10.0245°N, 104.0322°E • Concierge 24/7</p>
           </div>
-          <div>
-            <p className="label-uppercase mb-4 text-[10px] text-[#c5a880]">Khám phá</p>
-            <ul className="space-y-2 text-sm text-white/70">
-              <li><a href="/#villas">Biệt thự &amp; phòng</a></li>
-              <li><a href="/#experiences">Ẩm thực &amp; trải nghiệm</a></li>
-              <li><a href="/#wellness">Spa &amp; trị liệu</a></li>
-              <li><a href="/booking">Đặt phòng</a></li>
-            </ul>
-          </div>
-          <div>
-            <p className="label-uppercase mb-4 text-[10px] text-[#c5a880]">Hỗ trợ</p>
-            <ul className="space-y-2 text-sm text-white/70">
-              <li><a href="/booking">Chính sách hủy 48h</a></li>
-              <li><a href="/#contact">Liên hệ quản gia</a></li>
-              <li><a href="/admin">Dành cho vận hành</a></li>
-            </ul>
-          </div>
-          <div>
-            <p className="label-uppercase mb-4 text-[10px] text-[#c5a880]">Aura Journal</p>
-            <form action="/api/newsletter" method="post" className="flex gap-2">
-              <input name="email" type="email" required placeholder="Email của bạn" className="flex-1 bg-white/10 px-4 py-3 text-sm outline-none placeholder:text-white/40" />
-              <button className="bg-[#c5a880] px-4 text-xs font-semibold uppercase tracking-widest text-black">Gửi</button>
-            </form>
-          </div>
+          <nav className="flex flex-wrap gap-x-8 gap-y-2 text-[11px] font-semibold uppercase tracking-[0.22em]">
+            <a className="whitespace-nowrap hover:text-sand" href="/villas">Biệt thự</a>
+            <a className="whitespace-nowrap hover:text-sand" href="/booking">Đặt phòng</a>
+            <a className="whitespace-nowrap hover:text-sand" href="/admin">Vận hành</a>
+          </nav>
+          <form action="/api/newsletter" method="post" className="flex w-full max-w-xs items-center gap-2">
+            <input name="email" type="email" required placeholder="Email nhận Aura Journal" className="h-11 min-w-0 flex-1 border-b border-alabaster/25 bg-transparent py-2 text-sm outline-none placeholder:text-alabaster/35 focus:border-champagne" />
+            <button className="h-11 whitespace-nowrap px-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-sand">Gửi</button>
+          </form>
         </div>
-      </div>
-      <div className="border-t border-white/10 py-6 text-center text-xs text-white/40">
-        © {new Date().getFullYear()} Aura Sanctuary.
+        <p className="border-t border-alabaster/10 py-5 text-[11px] uppercase tracking-[0.2em] text-alabaster/35">
+          © {new Date().getFullYear()} Aura Sanctuary — Concierge 24/7
+        </p>
       </div>
     </footer>
   );
@@ -70,7 +57,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="flex min-h-screen flex-col">
         <SmoothScroll />
-        <Cursor />
         <AmbientSound />
         <SiteNav />
         <main className="flex-1">{children}</main>

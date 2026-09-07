@@ -104,7 +104,7 @@ export default function SeaOfLight() {
     () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
   return (
-    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#1c3238_0%,#101010_65%)]">
+    <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#1c3238_0%,#101010_65%)]">
       {!reduced && (
         <Canvas
           dpr={[1, 1.75]}

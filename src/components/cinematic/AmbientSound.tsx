@@ -73,15 +73,15 @@ export default function AmbientSound() {
   return (
     <button
       onClick={toggle}
-      data-cursor={on ? "Tắt sóng" : "Nghe sóng"}
+     
       aria-label="Tiếng sóng biển"
-      className="fixed bottom-6 right-6 z-[65] flex items-center gap-3 bg-[#101010]/70 py-3 pl-4 pr-5 text-[#f7f5f0] backdrop-blur-xl transition hover:bg-[#101010]/90"
+      className="fixed bottom-6 right-6 z-10 flex items-center gap-3 bg-night/70 py-3 pl-4 pr-5 text-alabaster backdrop-blur-xl transition hover:bg-night/90"
     >
       <span className="flex h-4 items-end gap-[3px]">
         {[0, 1, 2].map((i) => (
           <span
             key={i}
-            className="w-[3px] bg-[#c5a880]"
+            className="w-[3px] bg-champagne"
             style={{
               height: on ? undefined : "4px",
               animation: on ? `eq ${0.9 + i * 0.25}s ease-in-out ${i * 0.15}s infinite alternate` : "none",

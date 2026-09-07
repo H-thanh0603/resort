@@ -14,7 +14,7 @@ export default function Marquee({
   return (
     <div
       className={`overflow-hidden border-y py-5 ${
-        dark ? "border-white/10 bg-[#101010] text-[#f7f5f0]" : "hairline border-y bg-[#f7f5f0] text-[#161616]"
+        dark ? "border-alabaster/10 bg-night text-alabaster" : "hairline border-y bg-alabaster text-obsidian"
       } ${className}`}
     >
       <div className="marquee-track flex w-max items-baseline gap-10 whitespace-nowrap pr-10">
@@ -25,7 +25,7 @@ export default function Marquee({
                 <span className={`font-display text-2xl italic sm:text-3xl ${i % 2 ? "" : "not-italic font-semibold"}`}>
                   {t}
                 </span>
-                <span className="text-[#c5a880]">✦</span>
+                <span className="text-champagne">✦</span>
               </span>
             ))}
           </div>
